@@ -1,2 +1,2 @@
-# WxBriefWebapp
-Simple Weather Briefing for Pilots
+# WxBriefWebApp
+Wx Brief

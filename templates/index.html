@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Wx Brief Web App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            background-color: #f8f9fa;
+        }
+
+        textarea {
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .result-box {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4">🛫 Wx Briefing Tool</h1>
+
+        <form method="POST">
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <input type="text" name="airport1" class="form-control" placeholder="Departure (e.g., JFK)"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="airport2" class="form-control" placeholder="Arrival (e.g., LAX)" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Get Weather Briefing</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box mt-4">
+            <h4>METAR / TAF</h4>
+            <div>{{ result | safe }}</div>
+        </div>
+        {% endif %}
+
+        {% if datis1 or datis2 %}
+        <div class="result-box">
+            <h4>DATIS</h4>
+            <p><strong>Departure:</strong><br>{{ datis1 }}</p>
+            <p><strong>Arrival:</strong><br>{{ datis2 }}</p>
+        </div>
+        {% endif %}
+
+        {% if status1 or status2 %}
+        <div class="result-box">
+            <h4>Airport Status</h4>
+            <p><strong>Departure:</strong><br>
+            <pre>{{ status1 }}</pre>
+            </p>
+            <p><strong>Arrival:</strong><br>
+            <pre>{{ status2 }}</pre>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
