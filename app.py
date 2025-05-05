@@ -107,7 +107,7 @@ def format_status(data):
     status_lines = []
     status_lines.append(f"{data.get('ICAO', 'N/A')} - {data.get('Name', 'N/A')}, {data.get('City', 'N/A')}, {data.get('State', 'N/A')}<br>")
     if data.get('Delay'):
-        status_lines.append(f"Delays: {data.get('DelayCount', 0')}<br>")
+        status_lines.append(f"Delays: {data.get('DelayCount', 0)}<br>")
         for delay in data.get('Status', []):
             status_lines.append(f"{delay.get('Type', 'UNKNOWN')} Delay - Reason: {delay.get('Reason', 'N/A')}, Min: {delay.get('MinDelay')}, Max: {delay.get('MaxDelay')}<br>")
     else:
