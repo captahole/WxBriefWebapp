@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: wxbrief-web
+    runtime: python
+    buildCommand: ""
+    startCommand: "gunicorn app:app"
+    env: python
