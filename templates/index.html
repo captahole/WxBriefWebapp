@@ -1,74 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Wx Brief Web</title>
+    <title>Weather Briefing Tool</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
-            max-width: 900px;
-            margin: auto;
         }
 
-        input {
-            padding: 8px;
-            margin-right: 10px;
-            width: 100px;
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        button {
-            padding: 10px 20px;
-            font-weight: bold;
-        }
-
-        textarea {
+        .input-row input {
+            padding: 10px;
+            font-size: 16px;
             width: 100%;
-            height: 250px;
-            margin-top: 20px;
-            white-space: pre-wrap;
-            font-family: monospace;
         }
 
-        .section {
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .result {
             margin-top: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .metar-block {
+            margin-bottom: 20px;
+        }
+
+        .metar-block h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .metar-text {
+            background-color: #f8f8f8;
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border-left: 5px solid #999;
         }
     </style>
 </head>
 
 <body>
-    <h1>Wx Brief Web</h1>
-    <form method="POST">
-        <label>Departure:</label>
-        <input type="text" name="departure" placeholder="JFK" required>
-        <label>Arrival:</label>
-        <input type="text" name="arrival" placeholder="LAX" required>
-        <label>Alternate:</label>
-        <input type="text" name="alternate" placeholder="Optional">
-        <button type="submit">Get Weather Briefing</button>
+    <h1>Weather Briefing Tool</h1>
+    <form method="post">
+        <div class="input-row">
+            <input type="text" name="departure" placeholder="Departure ICAO (e.g., KSFO)">
+            <input type="text" name="destination" placeholder="Destination ICAO (e.g., KLAX)">
+            <input type="text" name="alternate" placeholder="Alternate ICAO (optional)">
+        </div>
+        <button type="submit" class="submit-button">Get METARs</button>
     </form>
 
-    {% if weather %}
-    <div class="section">
-        <h2>METAR / TAF</h2>
-        <div style="background-color:#f4f4f4;padding:10px;border:1px solid #ccc;">
-            {{ weather | safe }}
+    {% if metars %}
+    <div class="result">
+        {% for label, info in metars.items() %}
+        <div class="metar-block">
+            <h3>{{ label }} - {{ info.icao }}</h3>
+            <div class="metar-text">{{ info.metar }}</div>
         </div>
-    </div>
-    {% endif %}
-
-    {% if datis %}
-    <div class="section">
-        <h2>DATIS</h2>
-        <textarea readonly>{{ datis }}</textarea>
-    </div>
-    {% endif %}
-
-    {% if status %}
-    <div class="section">
-        <h2>Airport Status</h2>
-        <textarea readonly>{{ status }}</textarea>
+        {% endfor %}
     </div>
     {% endif %}
 </body>
