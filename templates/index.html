@@ -56,21 +56,26 @@
     <h1>Weather Briefing Tool</h1>
     <form method="post">
         <div class="input-row">
-            <input type="text" name="departure" placeholder="Departure ICAO (e.g., KSFO)">
-            <input type="text" name="destination" placeholder="Destination ICAO (e.g., KLAX)">
-            <input type="text" name="alternate" placeholder="Alternate ICAO (optional)">
+            <input type="text" name="departure" placeholder="Departure ICAO (e.g., KSFO)" value="{{ departure }}">
+            <input type="text" name="destination" placeholder="Destination ICAO (e.g., KLAX)" value="{{ destination }}">
         </div>
         <button type="submit" class="submit-button">Get METARs</button>
     </form>
 
-    {% if metars %}
+    {% if departure_metar or destination_metar %}
     <div class="result">
-        {% for label, info in metars.items() %}
+        {% if departure_metar %}
         <div class="metar-block">
-            <h3>{{ label }} - {{ info.icao }}</h3>
-            <div class="metar-text">{{ info.metar }}</div>
+            <h3>Departure - {{ departure }}</h3>
+            <div class="metar-text">{{ departure_metar }}</div>
         </div>
-        {% endfor %}
+        {% endif %}
+        {% if destination_metar %}
+        <div class="metar-block">
+            <h3>Destination - {{ destination }}</h3>
+            <div class="metar-text">{{ destination_metar }}</div>
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 </body>

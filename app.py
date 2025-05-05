@@ -17,14 +17,25 @@ def fetch_metar(icao):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    metars = {}
+    departure_metar = None
+    destination_metar = None
+    departure = ""
+    destination = ""
+
     if request.method == "POST":
-        for label in ["Departure", "Destination", "Alternate"]:
-            icao = request.form.get(label.lower())
-            if icao:
-                metar = fetch_metar(icao.strip().upper())
-                metars[label] = {"icao": icao.strip().upper(), "metar": metar}
-    return render_template("index.html", metars=metars)
+        departure = request.form.get("departure", "").strip().upper()
+        destination = request.form.get("destination", "").strip().upper()
+
+        if departure:
+            departure_metar = fetch_metar(departure)
+        if destination:
+            destination_metar = fetch_metar(destination)
+
+    return render_template("index.html", 
+                           departure=departure,
+                           destination=destination,
+                           departure_metar=departure_metar,
+                           destination_metar=destination_metar)
 
 if __name__ == "__main__":
     app.run(debug=True)
