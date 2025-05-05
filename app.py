@@ -1,41 +1,32 @@
+# app.py
 from flask import Flask, render_template, request
-import requests
+from wx_api import fetch_weather, colorize_weather, fetch_datis, fetch_airport_status
 
 app = Flask(__name__)
 
-def fetch_metar(icao):
-    url = f"https://aviationweather.gov/api/data/metar?ids={icao}&format=json"
-    try:
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        if data:
-            return data[0]['raw_text']
-    except Exception as e:
-        return f"Error: {e}"
-    return "No data found"
-
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    departure_metar = None
-    destination_metar = None
-    departure = ""
-    destination = ""
+    result = ""
+    datis1 = ""
+    datis2 = ""
+    status1 = ""
+    status2 = ""
 
-    if request.method == "POST":
-        departure = request.form.get("departure", "").strip().upper()
-        destination = request.form.get("destination", "").strip().upper()
+    if request.method == 'POST':
+        airport1 = request.form.get('airport1', '').strip().upper()
+        airport2 = request.form.get('airport2', '').strip().upper()
 
-        if departure:
-            departure_metar = fetch_metar(departure)
-        if destination:
-            destination_metar = fetch_metar(destination)
+        if airport1 and airport2:
+            raw_data = fetch_weather(airport1, airport2)
+            if raw_data:
+                result = colorize_weather(raw_data)
 
-    return render_template("index.html", 
-                           departure=departure,
-                           destination=destination,
-                           departure_metar=departure_metar,
-                           destination_metar=destination_metar)
+            datis1 = fetch_datis(airport1)
+            datis2 = fetch_datis(airport2)
+            status1 = fetch_airport_status(airport1)
+            status2 = fetch_airport_status(airport2)
 
-if __name__ == "__main__":
+    return render_template('index.html', result=result, datis1=datis1, datis2=datis2, status1=status1, status2=status2)
+
+if __name__ == '__main__':
     app.run(debug=True)

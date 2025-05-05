@@ -1,25 +1,22 @@
 # wx_api.py
-import re
 import requests
+import re
 from cachetools.func import ttl_cache
 
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_weather(airport1, airport2):
-    airport1 = f'K{airport1}'
-    airport2 = f'K{airport2}'
-    base_url = "https://aviationweather.gov/api/data/taf"
+    airport1 = f'K{airport1.upper()}'
+    airport2 = f'K{airport2.upper()}'
+    base_url = "https://aviationweather.gov/api/data/taf?"
     params = {
         "ids": f"{airport1},{airport2}",
         "format": "raw",
         "metar": "true",
         "time": "valid",
     }
-    try:
-        response = requests.get(base_url, params=params, timeout=10)
-        if response.status_code == 200:
-            return response.text
-    except:
-        pass
+    response = requests.get(base_url, params=params)
+    if response.status_code == 200:
+        return response.text
     return None
 
 def colorize_weather(data):
@@ -69,49 +66,68 @@ def colorize_weather(data):
 
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_datis(airport_code):
-    url = f"https://datis.clowd.io/api/K{airport_code}"
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200:
+    url = f"https://datis.clowd.io/api/K{airport_code.upper()}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        try:
             data = response.json()[0]
-            return data.get('datis', "DATIS not available.")
-    except:
-        return "Error fetching DATIS."
-    return "DATIS not available."
+            return data['datis']
+        except (KeyError, IndexError):
+            return "DATIS data not found."
+    return f"No DATIS Available. Status code: {response.status_code}"
 
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_airport_status(airport_code):
-    url = f'https://external-api.faa.gov/asws/api/airport/status/{airport_code}'
+    if not airport_code:
+        return "Error: Airport code is required"
+
+    url = f'https://external-api.faa.gov/asws/api/airport/status/{airport_code.upper()}'
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         data = response.json()
-        output = [f"Airport: {data.get('ICAO', 'N/A')} - {data.get('Name', 'N/A')}"]
-        output.append(f"Location: {data.get('City', 'N/A')}, {data.get('State', 'N/A')}")
+        output = []
+
+        output.extend([
+            "=" * 50,
+            f"Airport: {data.get('ICAO', 'N/A')} - {data.get('Name', 'N/A')}",
+            f"Location: {data.get('City', 'N/A')}, {data.get('State', 'N/A')}",
+            "=" * 50,
+            "\nSTATUS INFORMATION"
+        ])
 
         if data.get('Delay'):
-            output.append(f"\nDelays Reported: {data.get('DelayCount', 0)}")
+            output.append(f"Number of Delays: {data.get('DelayCount', 0)}\nCurrent Delays:")
             for delay in data.get('Status', []):
-                output.append(f"\n▸ {delay.get('Type', 'UNKNOWN').upper()} DELAY")
-                output.append(f"  • Reason: {delay.get('Reason', 'N/A')}")
-                output.append(f"  • Min: {delay.get('MinDelay', 'N/A')}")
-                output.append(f"  • Max: {delay.get('MaxDelay', 'N/A')}")
-                trend = delay.get('Trend')
-                if trend:
-                    output.append(f"  • Trend: {trend}")
+                output.extend([
+                    f"\n▸ {delay.get('Type', 'UNKNOWN').upper()} DELAY",
+                    f"  • Reason: {delay.get('Reason', 'N/A')}",
+                    f"  • Min Delay: {delay.get('MinDelay', 'N/A')}",
+                    f"  • Max Delay: {delay.get('MaxDelay', 'N/A')}",
+                    f"  • Trend: {delay.get('Trend', 'N/A')}"
+                ])
         else:
             output.append("✓ No delays reported")
 
-        weather = data.get('Weather')
-        if weather:
-            output.append("\nWEATHER CONDITIONS:")
-            output.append(f"  • Temp: {weather.get('Temp', ['N/A'])[0]}")
-            output.append(f"  • Vis: {weather.get('Visibility', ['N/A'])[0]} miles")
-            output.append(f"  • Wind: {weather.get('Wind', ['N/A'])[0]}")
-            meta = weather.get('Meta')
-            if meta and 'Updated' in meta[0]:
-                output.append(f"  Last Updated: {meta[0]['Updated']}")
-
+        if weather := data.get('Weather'):
+            output.extend([
+                "\nWEATHER CONDITIONS:",
+                f"  • Temperature: {weather.get('Temp', ['N/A'])[0]}",
+                f"  • Visibility: {weather.get('Visibility', ['N/A'])[0]} miles",
+                f"  • Wind: {weather.get('Wind', ['N/A'])[0]}"
+            ])
+            if meta := weather.get('Meta'):
+                if meta and 'Updated' in meta[0]:
+                    output.extend([
+                        "-" * 30,
+                        f"Last Updated: {meta[0]['Updated']}",
+                        "-" * 30
+                    ])
         return '\n'.join(output)
-    except:
-        return "Error fetching airport status."
+
+    except requests.Timeout:
+        return "Error: Request timed out."
+    except requests.RequestException as e:
+        return f"Request error: {e}"
+    except Exception as e:
+        return f"Unexpected error: {e}"
