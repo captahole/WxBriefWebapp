@@ -2,9 +2,13 @@ import os
 import re
 import datetime
 import requests
+import requests_cache
 from flask import Flask, render_template, request, jsonify
 from cachetools.func import ttl_cache
 from concurrent.futures import ThreadPoolExecutor
+
+# Install requests cache to reduce API calls and improve performance
+requests_cache.install_cache('wx_brief_cache', expire_after=300)  # Cache for 5 minutes
 
 app = Flask(__name__)
 
@@ -85,29 +89,99 @@ def colorize_weather(data):
 def fetch_datis(airport_code):
     if not airport_code:
         return "No airport code provided"
-        
-    # Convert to IATA code if needed for the API
-    iata_code = convert_to_iata(airport_code)
     
-    url = f"https://datis.clowd.io/api/{iata_code}"
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            data = response.json()
-            if data and isinstance(data, list) and len(data) > 0:
-                result = []
-                for station in data:
-                    if 'atis' in station:
-                        result.append(station['atis'])
-                return "\n\n".join(result) if result else "No DATIS available"
-            return "No DATIS data available"
+    # Try multiple formats for the airport code to increase chances of success
+    codes_to_try = []
+    
+    # Original code as provided
+    codes_to_try.append(airport_code)
+    
+    # If it's a 4-letter ICAO code, also try the 3-letter IATA code
+    if len(airport_code) == 4:
+        # For US airports with K prefix
+        if airport_code.startswith('K'):
+            codes_to_try.append(airport_code[1:])  # KJFK -> JFK
+        # For Hawaiian airports
+        elif airport_code.startswith('PH'):
+            codes_to_try.append(airport_code[2:])  # PHNL -> NL
+            codes_to_try.append(airport_code[1:])  # PHNL -> HNL
+        # For Puerto Rico airports
+        elif airport_code.startswith('TJ'):
+            codes_to_try.append(airport_code[2:])  # TJSJ -> SJ
+            codes_to_try.append(airport_code[1:])  # TJSJ -> JSJ
+        # For other international airports
         else:
-            return f"Error fetching DATIS: {response.status_code}"
-    except Exception as e:
-        return f"Error: {str(e)}"
+            codes_to_try.append(airport_code[1:])  # EGLL -> GLL
+    
+    # If it's a 3-letter code, also try with K prefix for US airports
+    elif len(airport_code) == 3:
+        codes_to_try.append(f"K{airport_code}")  # JFK -> KJFK
+    
+    # Try each code format until one works
+    for code in codes_to_try:
+        try:
+            # Try first with the FAA DATIS API
+            url = f"https://datis.clowd.io/api/{code}"
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                data = response.json()
+                if data and isinstance(data, list) and len(data) > 0:
+                    result = []
+                    for station in data:
+                        if 'atis' in station:
+                            result.append(station['atis'])
+                    if result:
+                        return "\n\n".join(result)
+            
+            # If the first API fails, try the alternative API
+            url = f"https://api.aviationapi.com/v1/datis?apt={code}"
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                data = response.json()
+                if data and code in data and data[code]:
+                    result = []
+                    for station_data in data[code]:
+                        if 'datis' in station_data:
+                            result.append(station_data['datis'])
+                    if result:
+                        return "\n\n".join(result)
+        
+        except Exception as e:
+            # Just try the next code format if this one fails
+            continue
+    
+    # If we've tried all formats and none worked, return a friendly message
+    return "DATIS information not available for this airport"
 
 def convert_to_iata(icao_code):
     """Convert ICAO code to IATA code for certain airports"""
+    if not icao_code:
+        return ""
+        
+    # Create a mapping for special cases where the conversion isn't straightforward
+    special_cases = {
+        # Hawaiian airports
+        "PHNL": "HNL",  # Honolulu
+        "PHOG": "OGG",  # Kahului
+        "PHKO": "KOA",  # Kona
+        "PHLI": "LIH",  # Lihue
+        "PHTO": "ITO",  # Hilo
+        
+        # Puerto Rico airports
+        "TJSJ": "SJU",  # San Juan
+        "TJBQ": "BQN",  # Aguadilla
+        "TJPS": "PSE",  # Ponce
+        
+        # Other common airports that might have non-standard conversions
+        "EGLL": "LHR",  # London Heathrow
+        "LFPG": "CDG",  # Paris Charles de Gaulle
+        "EDDF": "FRA",  # Frankfurt
+    }
+    
+    # Check if it's a special case
+    if icao_code.upper() in special_cases:
+        return special_cases[icao_code.upper()]
+    
     # Strip K prefix if present for US airports
     if icao_code.startswith('K') and len(icao_code) == 4:
         return icao_code[1:]
@@ -134,31 +208,60 @@ def convert_to_iata(icao_code):
 def fetch_airport_status(airport_code):
     if not airport_code:
         return "No airport code provided"
-        
+    
     # Convert to IATA code for FAA API
     iata_code = convert_to_iata(airport_code)
     
-    url = f"https://faa-status.p.rapidapi.com/api/v1/status/airport/{iata_code}"
-    headers = {
-        "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY", ""),
-        "X-RapidAPI-Host": "faa-status.p.rapidapi.com"
-    }
+    # First try the RapidAPI endpoint
+    if os.environ.get("RAPIDAPI_KEY"):
+        try:
+            url = f"https://faa-status.p.rapidapi.com/api/v1/status/airport/{iata_code}"
+            headers = {
+                "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY", ""),
+                "X-RapidAPI-Host": "faa-status.p.rapidapi.com"
+            }
+            
+            response = requests.get(url, headers=headers, timeout=5)
+            if response.status_code == 200:
+                data = response.json()
+                if 'data' in data and 'status' in data['data']:
+                    status = data['data']['status']
+                    return f"Status: {status['description']}\nDelay: {status['avgDelay']}\nReason: {status['reason']}"
+        except Exception:
+            # If RapidAPI fails, we'll try the FAA API directly
+            pass
     
-    if not headers["X-RapidAPI-Key"]:
-        return "API key not configured. Please set RAPIDAPI_KEY environment variable."
-    
+    # If RapidAPI failed or no key is available, try the FAA API directly
     try:
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            if 'data' in data and 'status' in data['data']:
-                status = data['data']['status']
-                return f"Status: {status['description']}\nDelay: {status['avgDelay']}\nReason: {status['reason']}"
-            return "No status information available"
-        else:
-            return f"Error fetching airport status: {response.status_code}"
-    except Exception as e:
-        return f"Error: {str(e)}"
+        # For US airports, try the FAA API
+        if airport_code.startswith('K') or len(airport_code) == 3:
+            # Use the FAA's public API
+            url = f"https://nasstatus.faa.gov/api/airport-status/{iata_code}"
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                data = response.json()
+                if data and 'status' in data:
+                    status_info = []
+                    if 'delay' in data:
+                        status_info.append(f"Status: {'Delayed' if data['delay'] else 'Normal'}")
+                    if 'closureEnd' in data and data['closureEnd']:
+                        status_info.append(f"Closure End: {data['closureEnd']}")
+                    if 'avgDelay' in data and data['avgDelay']:
+                        status_info.append(f"Avg Delay: {data['avgDelay']}")
+                    if 'reason' in data and data['reason']:
+                        status_info.append(f"Reason: {data['reason']}")
+                    if 'weather' in data and data['weather'] and data['weather'].get('temp'):
+                        status_info.append(f"Temperature: {data['weather']['temp']}°F")
+                    if 'weather' in data and data['weather'] and data['weather'].get('visibility'):
+                        status_info.append(f"Visibility: {data['weather']['visibility']} miles")
+                    
+                    if status_info:
+                        return "\n".join(status_info)
+    except Exception:
+        pass
+    
+    # If all APIs failed, return a generic message
+    return "Airport status information not available"
 
 @app.route('/')
 def index():
