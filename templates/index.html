@@ -5,53 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wx Brief</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 1000px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .output-box {
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
-            min-height: 150px;
-            max-height: 300px;
-            overflow-y: auto;
-            background-color: #f8f9fa;
-            white-space: pre-wrap;
-            font-family: monospace;
-            margin-bottom: 15px;
-        }
-        .utc-time {
-            font-weight: bold;
-            color: blue;
-        }
-        .fetch-button {
-            font-weight: bold;
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .fetch-button:hover {
-            background-color: #0069d9;
-            border-color: #0062cc;
-        }
-        #loading {
-            display: none;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-        }
-    </style>
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -121,97 +75,13 @@
                 </div>
             </div>
         </div>
+        
+        <div class="version-info">
+            WxBrief Web App v5.0 - Updated Apr 2025
+        </div>
     </div>
 
-    <script>
-        // Update UTC time
-        function updateUTCTime() {
-            const now = new Date();
-            const utcString = now.toISOString().replace('T', ' ').replace(/\.\d+Z$/, ' UTC');
-            document.getElementById('utcTime').textContent = utcString;
-        }
-        
-        // Initial UTC time update and set interval
-        updateUTCTime();
-        setInterval(updateUTCTime, 1000);
-        
-        // Fetch weather data
-        async function fetchWeatherData() {
-            const departure = document.getElementById('departureInput').value.trim();
-            const arrival = document.getElementById('arrivalInput').value.trim();
-            const alternate = document.getElementById('alternateInput').value.trim();
-            
-            if (!departure || !arrival) {
-                alert('Please enter both departure and arrival airports');
-                return;
-            }
-            
-            // Show loading indicator
-            document.getElementById('loading').style.display = 'block';
-            
-            try {
-                const response = await fetch('/get_weather', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        departure: departure,
-                        arrival: arrival,
-                        alternate: alternate
-                    }),
-                });
-                
-                const data = await response.json();
-                
-                // Update the output areas
-                document.getElementById('weatherOutput').innerHTML = data.weather;
-                document.getElementById('datisOutput').textContent = data.datis;
-                document.getElementById('statusOutput').textContent = data.status;
-                
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error fetching weather data. Please try again.');
-            } finally {
-                // Hide loading indicator
-                document.getElementById('loading').style.display = 'none';
-            }
-        }
-        
-        // Set up event listener for fetch button
-        document.getElementById('fetchButton').addEventListener('click', fetchWeatherData);
-        
-        // Auto-refresh functionality
-        let autoRefreshInterval = null;
-        
-        document.getElementById('autoRefreshButton').addEventListener('click', function() {
-            const button = document.getElementById('autoRefreshButton');
-            
-            if (autoRefreshInterval) {
-                // Stop auto-refresh
-                clearInterval(autoRefreshInterval);
-                autoRefreshInterval = null;
-                button.textContent = 'Start Auto-Refresh';
-                button.classList.remove('btn-success');
-                button.classList.add('btn-outline-secondary');
-            } else {
-                // Start auto-refresh
-                const intervalInput = document.getElementById('refreshIntervalInput').value;
-                const interval = parseInt(intervalInput);
-                
-                if (isNaN(interval) || interval < 1) {
-                    alert('Please enter a valid refresh interval (seconds)');
-                    return;
-                }
-                
-                fetchWeatherData(); // Fetch immediately
-                autoRefreshInterval = setInterval(fetchWeatherData, interval * 1000);
-                
-                button.textContent = 'Stop Auto-Refresh';
-                button.classList.remove('btn-outline-secondary');
-                button.classList.add('btn-success');
-            }
-        });
-    </script>
+    <!-- Load the external JavaScript file -->
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
