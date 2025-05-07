@@ -51,12 +51,6 @@
             width: 3rem;
             height: 3rem;
         }
-        .version-info {
-            font-size: 0.8rem;
-            color: #6c757d;
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -127,10 +121,6 @@
                 </div>
             </div>
         </div>
-        
-        <div class="version-info">
-            WxBrief Web App v5.0 - Updated Apr 2025
-        </div>
     </div>
 
     <script>
@@ -196,21 +186,6 @@
         
         // Set up event listener for fetch button
         document.getElementById('fetchButton').addEventListener('click', fetchWeatherData);
-        
-        // Add keyboard shortcut for fetch (Enter key in input fields)
-        const inputFields = [
-            document.getElementById('departureInput'),
-            document.getElementById('arrivalInput'),
-            document.getElementById('alternateInput')
-        ];
-        
-        inputFields.forEach(input => {
-            input.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    fetchWeatherData();
-                }
-            });
-        });
         
         // Auto-refresh functionality
         let autoRefreshInterval = null;
