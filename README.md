@@ -54,3 +54,18 @@ The weather information is color-coded according to standard flight categories:
 - Flask
 - Requests
 - Cachetools
+
+run local
+Direct Flask run:
+
+flask run
+
+Copy
+Using the run script:
+
+./run.sh
+
+Copy
+Using Docker:
+
+docker-compose up
