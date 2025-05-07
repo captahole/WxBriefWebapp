@@ -1,47 +1,77 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Wx Brief Web</title>
-    <style>
-        body {
-            font-family: Arial;
-            margin: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            margin-top: 10px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wx Brief</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-    <h1>Wx Brief Web App</h1>
-    <p><strong>Current UTC:</strong> {{ utc_time }}</p>
-    <form method="post">
-        <label>Departure:</label>
-        <input type="text" name="departure" value="{{ airports.departure }}" required><br>
-        <label>Arrival:</label>
-        <input type="text" name="arrival" value="{{ airports.arrival }}" required><br>
-        <label>Alternate (optional):</label>
-        <input type="text" name="alternate" value="{{ airports.alternate }}"><br><br>
-        <button type="submit">Get Weather Briefing</button>
-    </form>
+    <div class="container">
+        <header>
+            <h1>Wx Brief</h1>
+            <div class="utc-time">
+                <span>Current UTC:</span>
+                <span id="utc-time-display" class="utc-time-value">Loading...</span>
+            </div>
+        </header>
 
-    <h3>METAR / TAF</h3>
-    <textarea readonly>{{ weather_data }}</textarea>
+        <div class="input-section">
+            <div class="airport-inputs">
+                <div class="input-group">
+                    <label for="departure">Departure</label>
+                    <input type="text" id="departure" placeholder="JFK" class="airport-input">
+                </div>
+                <div class="input-group">
+                    <label for="arrival">Arrival</label>
+                    <input type="text" id="arrival" placeholder="LAX" class="airport-input">
+                </div>
+                <div class="input-group">
+                    <label for="alternate">Alternate (Optional)</label>
+                    <input type="text" id="alternate" placeholder="SFO" class="airport-input">
+                </div>
+            </div>
+            <button id="fetch-button" class="primary-button">
+                <i class="fas fa-cloud-sun"></i> Get Weather Briefing
+            </button>
+        </div>
 
-    <h3>DATIS</h3>
-    <textarea readonly>{{ datis_data }}</textarea>
+        <div class="auto-refresh-section">
+            <label for="refresh-interval">Auto-refresh (sec):</label>
+            <input type="number" id="refresh-interval" placeholder="60" min="10">
+            <button id="auto-refresh-button" class="secondary-button">
+                <i class="fas fa-sync-alt"></i> Start Auto-Refresh
+            </button>
+        </div>
 
-    <h3>Airport Status</h3>
-    <textarea readonly>{{ status_data }}</textarea>
+        <div class="loading-indicator" id="loading-indicator">
+            <div class="spinner"></div>
+            <p>Fetching weather data...</p>
+        </div>
+
+        <div class="data-section">
+            <div class="data-card">
+                <h2><i class="fas fa-cloud"></i> METAR / TAF</h2>
+                <div id="weather-output" class="data-content"></div>
+            </div>
+
+            <div class="data-card">
+                <h2><i class="fas fa-broadcast-tower"></i> DATIS</h2>
+                <div id="datis-output" class="data-content"></div>
+            </div>
+
+            <div class="data-card">
+                <h2><i class="fas fa-plane-departure"></i> Airport Status</h2>
+                <div id="status-output" class="data-content"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Data retrieved at <span id="data-timestamp">-</span></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-
 </html>

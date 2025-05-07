@@ -25,21 +25,26 @@ venv/
 ENV/
 env/
 
-# IDE files
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# OS specific files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Flask
+instance/
+.webassets-cache
 
-# Local environment variables
+# Logs
+logs/
+*.log
+
+# Local development
 .env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Mac OS
+.DS_Store
