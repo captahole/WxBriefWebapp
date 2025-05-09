@@ -36,7 +36,8 @@ The weather information is color-coded according to standard flight categories:
 
 ## Usage
 
-1. Enter the departure airport code (e.g., JFK, LAX)
+1. Enter the departure airport code IATA or ICAO (e.g., KJFK, LAX)
+2. For HAWAII, Carribean, Alaska use ICAO (e.g., PHNL,TJSJ)
 2. Enter the arrival airport code
 3. Optionally, enter an alternate airport code
 4. Click "Get Weather Briefing" to fetch the data
@@ -55,17 +56,17 @@ The weather information is color-coded according to standard flight categories:
 - Requests
 - Cachetools
 
-run local
-Direct Flask run:
+## Run Local
 
+Direct Flask run:
 flask run
 
 Copy
 Using the run script:
-
 ./run.sh
 
 Copy
 Using Docker:
-
 docker-compose up
+
+EH 2025
