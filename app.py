@@ -4,8 +4,13 @@ import datetime
 import requests
 from cachetools.func import ttl_cache
 from flask import Flask, render_template, request, jsonify
+from flask import send_from_directory
 
 app = Flask(__name__)
+
+@app.route('/ads.txt')
+def ads_txt():
+    return send_from_directory('.', 'ads.txt')
 
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_weather(airport1, airport2, airport3=None):

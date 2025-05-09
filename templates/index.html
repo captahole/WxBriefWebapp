@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7913379801369919"
         crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -52,6 +54,17 @@
             <p>Fetching weather data...</p>
         </div>
 
+        <!-- Google AdSense Display Ad -->
+        <div class="ads-section" style="margin: 20px 0; text-align: center;">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7913379801369919"
+                data-ad-slot="ca-pub-7913379801369919" <!-- Replace with your actual Ad Slot ID -->
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <div class="data-section">
             <div class="data-card">
                 <h2><i class="fas fa-cloud"></i> METAR / TAF</h2>
@@ -76,4 +89,5 @@
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
