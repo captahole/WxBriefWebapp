@@ -8,10 +8,6 @@ from flask import send_from_directory
 
 app = Flask(__name__)
 
-@app.route('/ads.txt')
-def ads_txt():
-    return send_from_directory('.', 'ads.txt')
-
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_weather(airport1, airport2, airport3=None):
     """Fetch weather data for airports with caching"""
