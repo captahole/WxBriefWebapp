@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dataTimestamp.textContent = data.timestamp;
             
             // Process and display weather data
-            displayWeatherData(data.weather);
+            displayWeatherData(data.weather, departure, arrival, alternate);
             
             // Process and display DATIS data
             displayDatisData(data.datis, departure, arrival, alternate);
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Display weather data with color coding
-    function displayWeatherData(weatherData) {
+    function displayWeatherData(weatherData, departure, arrival, alternate) {
         if (!weatherData || Object.keys(weatherData).length === 0) {
             weatherOutput.innerHTML = '<span style="color: red;">No weather data available</span>';
             return;
@@ -127,8 +127,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let html = '';
         
-        // Process each airport's data
+        // Create an ordered array of airport codes based on user input
+        const orderedAirports = [];
+        
+        // Format airport codes to match what's in the weather data
+        const formattedDeparture = formatAirportCode(departure);
+        const formattedArrival = formatAirportCode(arrival);
+        const formattedAlternate = alternate ? formatAirportCode(alternate) : null;
+        
+        // Add airports in the order they were entered
+        if (weatherData[formattedDeparture]) orderedAirports.push(formattedDeparture);
+        if (weatherData[formattedArrival]) orderedAirports.push(formattedArrival);
+        if (formattedAlternate && weatherData[formattedAlternate]) orderedAirports.push(formattedAlternate);
+        
+        // Add any other airports that might be in the data but weren't explicitly ordered
         for (const airportCode in weatherData) {
+            if (!orderedAirports.includes(airportCode)) {
+                orderedAirports.push(airportCode);
+            }
+        }
+        
+        // Process each airport's data in the specified order
+        orderedAirports.forEach(airportCode => {
             const airportLines = weatherData[airportCode];
             
             html += `<div class="airport-data">`;
@@ -140,9 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             html += `</div>`;
-        }
+        });
         
         weatherOutput.innerHTML = html;
+    }
+    
+    // Helper function to format airport codes to match what's in the weather data
+    function formatAirportCode(code) {
+        if (!code) return null;
+        
+        // Don't add K prefix if it's already a 4-letter code or starts with PH/TJ
+        if (code.length === 4) return code;
+        if (code.startsWith('PH') || code.startsWith('TJ')) return code;
+        
+        return `K${code}`;
     }
 
     // Display DATIS data

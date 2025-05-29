@@ -51,11 +51,11 @@ def colorize_weather(data):
         return []
         
     lines = data.split('\n')
-    colored_lines = []
     
     # Track current airport to add spacing between airports
     current_airport = None
     airport_data = {}
+    airport_order = []  # To preserve the order of airports
     
     for line in lines:
         # Skip empty lines
@@ -74,6 +74,7 @@ def colorize_weather(data):
                     
             if airport_code not in airport_data:
                 airport_data[airport_code] = []
+                airport_order.append(airport_code)  # Remember the order
                 
             current_airport = airport_code
         
@@ -125,7 +126,13 @@ def colorize_weather(data):
                 'category': category
             })
     
-    return airport_data
+    # Create an ordered result using the airport_order list
+    ordered_result = {}
+    for code in airport_order:
+        ordered_result[code] = airport_data[code]
+    
+    return ordered_result
+
 
 @ttl_cache(maxsize=128, ttl=60)
 def fetch_datis(airport_code):
