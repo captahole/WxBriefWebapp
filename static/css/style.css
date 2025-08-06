@@ -300,6 +300,21 @@ footer {
     font-size: 0.9rem;
 }
 
+.footer-links {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 0.9em;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
 /* Airport data styling */
 .airport-data {
     margin-bottom: 20px;
