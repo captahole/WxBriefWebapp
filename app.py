@@ -5,9 +5,22 @@ import requests
 from cachetools.func import ttl_cache
 from flask import Flask, render_template, request, jsonify
 from flask import send_from_directory
+from flask import Blueprint, render_template
 
 
 app = Flask(__name__)
+
+bp = Blueprint('about', __name__)
+
+@bp.route('/about')
+def about():
+    return render_template('about.html')
+
+app.register_blueprint(bp)
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy-policy.html')
 
 @app.route('/ads.txt')
 def ads():

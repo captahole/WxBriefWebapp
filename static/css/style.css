@@ -349,3 +349,16 @@ footer {
         grid-column: span 1;
     }
 }
+/* static/css/style.css */
+.back-button {
+    background-color: #f5f7fa;
+    color: #333333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #f5f7fa;
+}
