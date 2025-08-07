@@ -22,6 +22,10 @@ app.register_blueprint(bp)
 def privacy_policy():
     return render_template('privacy-policy.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/ads.txt')
 def ads():
     return send_from_directory('.', 'ads.txt')
