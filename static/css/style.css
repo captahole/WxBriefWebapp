@@ -329,24 +329,16 @@ footer {
     color: var(--primary-color);
 }
 
-/* Responsive design */
+/* Responsive design - Keep vertical layout on all screen sizes */
 @media (min-width: 768px) {
     .data-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .data-card:first-child {
-        grid-column: span 2;
+        grid-template-columns: 1fr;  /* Keep single column */
     }
 }
 
 @media (min-width: 1024px) {
     .data-section {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .data-card:first-child {
-        grid-column: span 1;
+        grid-template-columns: 1fr;  /* Keep single column */
     }
 }
 /* static/css/style.css */
