@@ -94,8 +94,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 alternate: alternate || null
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Full response data:', data);
+            
             // Update timestamp
             dataTimestamp.textContent = data.timestamp;
             
@@ -120,7 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Display weather data with color coding
     function displayWeatherData(weatherData, departure, arrival, alternate) {
+        console.log('Weather data received:', weatherData);
+        
         if (!weatherData || Object.keys(weatherData).length === 0) {
+            console.log('No weather data available');
             weatherOutput.innerHTML = '<span style="color: red;">No weather data available</span>';
             return;
         }
@@ -135,6 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedArrival = formatAirportCode(arrival);
         const formattedAlternate = alternate ? formatAirportCode(alternate) : null;
         
+        console.log('Formatted codes:', {formattedDeparture, formattedArrival, formattedAlternate});
+        console.log('Available airports in data:', Object.keys(weatherData));
+        
         // Add airports in the order they were entered
         if (weatherData[formattedDeparture]) orderedAirports.push(formattedDeparture);
         if (weatherData[formattedArrival]) orderedAirports.push(formattedArrival);
@@ -147,20 +161,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
+        console.log('Ordered airports:', orderedAirports);
+        
         // Process each airport's data in the specified order
         orderedAirports.forEach(airportCode => {
             const airportLines = weatherData[airportCode];
+            console.log(`Processing ${airportCode}:`, airportLines);
             
             html += `<div class="airport-data">`;
             html += `<div class="airport-code">${airportCode}</div>`;
             
             // Process each line of data for this airport
-            airportLines.forEach(line => {
-                html += `<div class="${line.category.toLowerCase()}">${line.text}</div>`;
-            });
+            if (Array.isArray(airportLines)) {
+                airportLines.forEach(line => {
+                    if (line && line.text && line.category) {
+                        html += `<div class="${line.category.toLowerCase()}">${line.text}</div>`;
+                    } else {
+                        html += `<div>${JSON.stringify(line)}</div>`;
+                    }
+                });
+            } else {
+                html += `<div>Invalid data format for ${airportCode}</div>`;
+            }
             
             html += `</div>`;
         });
+        
+        // If no airports were processed, show raw data for debugging
+        if (orderedAirports.length === 0) {
+            html = `<div style="color: orange;">Debug - Raw weather data:</div>`;
+            html += `<pre>${JSON.stringify(weatherData, null, 2)}</pre>`;
+        }
         
         weatherOutput.innerHTML = html;
     }
