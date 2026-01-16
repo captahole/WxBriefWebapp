@@ -426,6 +426,47 @@ footer {
         flex-wrap: wrap;
         gap: 10px;
     }
+    
+    /* Mobile-specific affiliate section styling */
+    .affiliate-section {
+        padding: 20px 15px;
+        margin: 20px 0 15px 0;
+    }
+    
+    .affiliate-link {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        font-size: 1rem;
+        padding: 16px 20px;
+        gap: 10px;
+        /* Ensure proper touch target size */
+        min-height: 56px;
+        box-sizing: border-box;
+    }
+    
+    .affiliate-link i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .affiliate-section {
+        padding: 15px 10px;
+    }
+    
+    .affiliate-link {
+        font-size: 0.95rem;
+        padding: 14px 16px;
+        gap: 8px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    
+    .affiliate-link i {
+        font-size: 1.1rem;
+    }
 }
 
 /* Back button styling */
@@ -458,6 +499,7 @@ footer {
 .affiliate-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     color: white;
     text-decoration: none;
@@ -468,9 +510,14 @@ footer {
     border-radius: 8px;
     transition: all 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.3);
+    /* Ensure link is tappable on mobile */
+    min-height: 48px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3);
 }
 
-.affiliate-link:hover {
+.affiliate-link:hover,
+.affiliate-link:active {
     background: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
@@ -478,4 +525,5 @@ footer {
 
 .affiliate-link i {
     font-size: 1.3rem;
+    flex-shrink: 0;
 }
