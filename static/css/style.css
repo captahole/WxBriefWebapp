@@ -36,6 +36,54 @@ body {
     padding: 20px;
 }
 
+/* Amazon Affiliate Banner */
+.amazon-affiliate-banner {
+    background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(255, 153, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.amazon-affiliate-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3);
+}
+
+.amazon-affiliate-link:hover,
+.amazon-affiliate-link:active {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    color: white;
+    text-decoration: none;
+}
+
+.amazon-affiliate-link i:first-child {
+    font-size: 1.2rem;
+}
+
+.amazon-affiliate-link i:last-child {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
 /* Header - Single line with title and time */
 header {
     display: flex;
@@ -427,6 +475,22 @@ footer {
         gap: 10px;
     }
     
+    /* Mobile Amazon affiliate banner */
+    .amazon-affiliate-banner {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+    }
+    
+    .amazon-affiliate-link {
+        display: flex;
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        gap: 8px;
+        min-height: 48px;
+        box-sizing: border-box;
+    }
+    
     /* Mobile-specific affiliate section styling */
     .affiliate-section {
         padding: 20px 15px;
@@ -452,6 +516,21 @@ footer {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
+    .amazon-affiliate-banner {
+        padding: 10px 8px;
+        margin-bottom: 12px;
+    }
+    
+    .amazon-affiliate-link {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+        gap: 6px;
+    }
+    
+    .amazon-affiliate-link i:first-child {
+        font-size: 1.1rem;
+    }
+    
     .affiliate-section {
         padding: 15px 10px;
     }
