@@ -36,6 +36,26 @@ def contact():
     return render_template("contact.html")
 
 
+@app.route("/blog")
+def blog_index():
+    return render_template("blog/index.html")
+
+
+@app.route("/blog/how-to-read-a-metar")
+def blog_metar():
+    return render_template("blog/how-to-read-a-metar.html")
+
+
+@app.route("/blog/understanding-taf-forecasts")
+def blog_taf():
+    return render_template("blog/understanding-taf-forecasts.html")
+
+
+@app.route("/blog/vfr-ifr-mvfr-lifr-flight-categories")
+def blog_flight_categories():
+    return render_template("blog/vfr-ifr-mvfr-lifr-flight-categories.html")
+
+
 @app.route("/ads.txt")
 def ads():
     return send_from_directory(".", "ads.txt")

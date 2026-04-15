@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviation Weather Resources – WxBriefPro</title>
+    <meta name="description" content="Pilot resources and guides: how to read METARs, understand TAF forecasts, decode DATIS, and more. Free aviation weather education for student and private pilots.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wxbriefpro.com/blog">
+    <meta property="og:title" content="Aviation Weather Resources – WxBriefPro">
+    <meta property="og:description" content="Free guides for pilots: reading METARs, TAFs, DATIS, and understanding flight categories.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <h1><i class="fas fa-book-open"></i> Aviation Weather Resources</h1>
+            <p>Guides and references to help student and private pilots understand aviation weather products.</p>
+
+            <div class="blog-grid">
+                <a href="/blog/how-to-read-a-metar" class="blog-card">
+                    <div class="blog-card-icon"><i class="fas fa-cloud"></i></div>
+                    <div class="blog-card-body">
+                        <h2>How to Read a METAR</h2>
+                        <p>A plain-English breakdown of every field in a METAR report — wind, visibility, sky conditions, temperature, and altimeter setting.</p>
+                        <span class="blog-read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="/blog/understanding-taf-forecasts" class="blog-card">
+                    <div class="blog-card-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="blog-card-body">
+                        <h2>Understanding TAF Forecasts</h2>
+                        <p>Learn how to decode Terminal Aerodrome Forecasts — validity periods, change groups (TEMPO, BECMG, FM), and how to use them for flight planning.</p>
+                        <span class="blog-read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="/blog/vfr-ifr-mvfr-lifr-flight-categories" class="blog-card">
+                    <div class="blog-card-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="blog-card-body">
+                        <h2>VFR, MVFR, IFR, LIFR – Flight Categories Explained</h2>
+                        <p>What the four flight categories mean, how they're determined from ceiling and visibility, and why they matter for your go/no-go decision.</p>
+                        <span class="blog-read-more">Read more →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/blog">Blog</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

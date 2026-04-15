@@ -726,3 +726,113 @@ footer {
         gap: 4px;
     }
 }
+
+/* ── Blog ── */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.blog-card {
+    display: flex;
+    gap: 16px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.blog-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.blog-card-icon {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.blog-card-body h2 {
+    font-size: 1rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    border: none;
+    padding: 0;
+}
+
+.blog-card-body p {
+    font-size: 0.88rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.blog-read-more {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* METAR/TAF example block */
+.metar-example {
+    background: #1e2a38;
+    color: #a8d8a8;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.6;
+}
+
+/* Flight category table */
+.flight-cat-table {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
+.flight-cat-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    gap: 0;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.flight-cat-row:last-child {
+    border-bottom: none;
+}
+
+.header-row {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 700;
+}
+
+.vfr-row   { background: rgba(40,167,69,0.08); }
+.mvfr-row  { background: rgba(0,123,255,0.08); }
+.ifr-row   { background: rgba(220,53,69,0.08); }
+.lifr-row  { background: rgba(111,66,193,0.08); }
+
+@media (max-width: 600px) {
+    .flight-cat-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+    .header-row span:not(:first-child) { display: none; }
+}

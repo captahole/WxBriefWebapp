@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding TAF Forecasts – WxBriefPro</title>
+    <meta name="description" content="Learn how to read and decode TAF (Terminal Aerodrome Forecast) reports. Covers validity periods, FM, TEMPO, BECMG change groups, and how to use TAFs for flight planning.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.wxbriefpro.com/blog/understanding-taf-forecasts">
+    <meta property="og:title" content="Understanding TAF Forecasts – WxBriefPro">
+    <meta property="og:description" content="How to decode TAF aviation forecasts — validity periods, change groups, and flight planning tips.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <p><a href="/blog">← Back to Resources</a></p>
+            <h1>Understanding TAF Forecasts</h1>
+            <p style="color:#6c757d; font-size:0.9rem;">Aviation Weather Guide · 6 min read</p>
+
+            <p>A <strong>TAF</strong> (Terminal Aerodrome Forecast) is a weather forecast for the airspace within 5 statute miles of an airport, issued every 6 hours and valid for 24–30 hours. It uses the same format as a METAR but adds change groups to describe how conditions will evolve.</p>
+
+            <h2>Example TAF</h2>
+            <div class="metar-example">TAF KLAX 151720Z 1518/1624 25010KT P6SM FEW030
+  FM160200 27006KT P6SM SKC
+  TEMPO 1518/1522 25015G25KT 4SM BR BKN015
+  BECMG 1608/1610 VRB03KT</div>
+
+            <h2>Header Fields</h2>
+
+            <h3>Report Type — <code>TAF</code></h3>
+            <p><code>TAF</code> is a standard forecast. <code>TAF AMD</code> is an amended forecast issued when conditions change significantly before the next scheduled issuance.</p>
+
+            <h3>Station & Issue Time — <code>KLAX 151720Z</code></h3>
+            <p>Same as METAR: 4-letter ICAO identifier and the UTC date/time the forecast was issued (day 15, 17:20Z).</p>
+
+            <h3>Validity Period — <code>1518/1624</code></h3>
+            <p>The forecast is valid from day 15 at 18:00Z through day 16 at 24:00Z (midnight). Format is <code>DDHH/DDHH</code>.</p>
+
+            <h3>Base Conditions</h3>
+            <p>The first line after the header describes expected conditions at the start of the valid period — same fields as a METAR (wind, visibility, sky conditions).</p>
+
+            <h2>Change Groups</h2>
+
+            <h3>FM (From) — <code>FM160200</code></h3>
+            <p>A <strong>permanent</strong> change. From day 16 at 02:00Z, all previous conditions are replaced by the new line. Use FM when a front or significant shift is expected.</p>
+
+            <h3>TEMPO (Temporary) — <code>TEMPO 1518/1522</code></h3>
+            <p>Conditions that last <strong>less than half the time</strong> during the period and each occurrence lasts less than 60 minutes. The base conditions still apply outside the TEMPO window. Here: between 18:00Z and 22:00Z on day 15, expect gusts to 25 kt and 4SM visibility in mist with a broken ceiling at 1,500 ft.</p>
+
+            <h3>BECMG (Becoming) — <code>BECMG 1608/1610</code></h3>
+            <p>A <strong>gradual, permanent</strong> change expected to occur between the two times. By 10:00Z on day 16, winds will have become variable at 3 kt. Unlike FM, the change happens gradually over the window.</p>
+
+            <h3>PROB (Probability)</h3>
+            <p><code>PROB30</code> or <code>PROB40</code> indicates a 30% or 40% probability of the following conditions. You won't see PROB50 or higher — forecasters use TEMPO instead. PROB30 is a heads-up; PROB40 warrants more attention.</p>
+
+            <h2>Tips for Using TAFs in Flight Planning</h2>
+            <ul>
+                <li>Check the TAF validity covers your entire flight window, including alternates.</li>
+                <li>A TEMPO with IFR conditions during your ETA window is a strong signal to have a solid alternate.</li>
+                <li>FM groups reset all conditions — don't assume the base forecast still applies after an FM.</li>
+                <li>TAFs are only issued for airports with an approved observation program — smaller fields may not have one. Use area forecasts (FA) for those.</li>
+                <li>Always cross-reference the TAF with the current METAR to see if the forecast is verifying.</li>
+            </ul>
+
+            <p style="margin-top:24px;"><a href="/" class="primary-button" style="display:inline-block;width:auto;padding:10px 20px;"><i class="fas fa-cloud-sun"></i> Check TAFs on WxBriefPro</a></p>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/blog">Blog</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

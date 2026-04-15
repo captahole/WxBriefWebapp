@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Read a METAR – WxBriefPro</title>
+    <meta name="description" content="A complete guide to reading METAR aviation weather reports. Learn what every field means — wind, visibility, sky conditions, temperature, dewpoint, and altimeter.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.wxbriefpro.com/blog/how-to-read-a-metar">
+    <meta property="og:title" content="How to Read a METAR – WxBriefPro">
+    <meta property="og:description" content="A plain-English breakdown of every field in a METAR report for student and private pilots.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <p><a href="/blog">← Back to Resources</a></p>
+            <h1>How to Read a METAR</h1>
+            <p style="color:#6c757d; font-size:0.9rem;">Aviation Weather Guide · 5 min read</p>
+
+            <p>A <strong>METAR</strong> (Meteorological Aerodrome Report) is a standardized weather observation issued hourly (or more frequently as a SPECI when conditions change significantly). Here's how to decode one field by field.</p>
+
+            <h2>Example METAR</h2>
+            <div class="metar-example">METAR KLAX 151853Z 25012KT 10SM FEW025 SCT060 18/10 A2992 RMK AO2 SLP132</div>
+
+            <h2>Field-by-Field Breakdown</h2>
+
+            <h3>Report Type — <code>METAR</code></h3>
+            <p><code>METAR</code> is a routine observation. <code>SPECI</code> is a special observation issued when conditions change rapidly (e.g., visibility drops below 3 miles).</p>
+
+            <h3>Station Identifier — <code>KLAX</code></h3>
+            <p>The 4-letter ICAO airport identifier. US airports start with K (e.g., KLAX = Los Angeles). Hawaii uses PH, Alaska uses PA, Puerto Rico uses TJ.</p>
+
+            <h3>Date/Time — <code>151853Z</code></h3>
+            <p>Day of month (15) followed by time in UTC (18:53Z). Always in Zulu/UTC — never local time.</p>
+
+            <h3>Wind — <code>25012KT</code></h3>
+            <p>Direction the wind is blowing <em>from</em> in degrees true (250°), speed in knots (12 kt). <code>00000KT</code> means calm. Gusts appear as <code>25012G22KT</code>. <code>VRB</code> means variable direction.</p>
+
+            <h3>Visibility — <code>10SM</code></h3>
+            <p>Prevailing visibility in statute miles. <code>P6SM</code> means "greater than 6 statute miles." Values below 3SM are significant for IFR conditions.</p>
+
+            <h3>Sky Conditions — <code>FEW025 SCT060</code></h3>
+            <p>Cloud coverage and height in hundreds of feet AGL:</p>
+            <ul>
+                <li><strong>FEW</strong> — 1–2 oktas (1/8 to 2/8 coverage)</li>
+                <li><strong>SCT</strong> (Scattered) — 3–4 oktas</li>
+                <li><strong>BKN</strong> (Broken) — 5–7 oktas — this defines the ceiling</li>
+                <li><strong>OVC</strong> (Overcast) — 8 oktas — also defines the ceiling</li>
+                <li><strong>CLR</strong> / <strong>SKC</strong> — clear below 12,000 ft / sky clear</li>
+                <li><strong>VV</strong> (Vertical Visibility) — used when sky is obscured (e.g., fog, smoke)</li>
+            </ul>
+            <p>So <code>FEW025</code> = few clouds at 2,500 ft, <code>SCT060</code> = scattered at 6,000 ft.</p>
+
+            <h3>Temperature / Dewpoint — <code>18/10</code></h3>
+            <p>Temperature and dewpoint in Celsius. A small spread (e.g., 18/16) means high humidity and possible fog or low clouds. Negative values are prefixed with M (e.g., <code>M05/M08</code>).</p>
+
+            <h3>Altimeter Setting — <code>A2992</code></h3>
+            <p>Barometric pressure in inches of mercury (29.92 inHg). Set this in your altimeter before flight. In metric countries you'll see <code>Q</code> followed by hectopascals (e.g., <code>Q1013</code>).</p>
+
+            <h3>Remarks — <code>RMK AO2 SLP132</code></h3>
+            <p>Additional info after <code>RMK</code>. Common items:</p>
+            <ul>
+                <li><code>AO2</code> — automated station with precipitation discriminator</li>
+                <li><code>SLP132</code> — sea-level pressure 1013.2 hPa</li>
+                <li><code>TSNO</code> — thunderstorm information not available</li>
+                <li><code>PRESRR</code> / <code>PRESFR</code> — pressure rising/falling rapidly</li>
+            </ul>
+
+            <h2>Quick Reference: Flight Categories from a METAR</h2>
+            <ul>
+                <li><span style="color:#28a745;font-weight:bold;">VFR</span> — ceiling &gt; 3,000 ft AND visibility &gt; 5 SM</li>
+                <li><span style="color:#007bff;font-weight:bold;">MVFR</span> — ceiling 1,000–3,000 ft OR visibility 3–5 SM</li>
+                <li><span style="color:#dc3545;font-weight:bold;">IFR</span> — ceiling 500–999 ft OR visibility 1–3 SM</li>
+                <li><span style="color:#6f42c1;font-weight:bold;">LIFR</span> — ceiling &lt; 500 ft OR visibility &lt; 1 SM</li>
+            </ul>
+
+            <p style="margin-top:24px;"><a href="/" class="primary-button" style="display:inline-block;width:auto;padding:10px 20px;"><i class="fas fa-cloud-sun"></i> Try WxBriefPro Now</a></p>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/blog">Blog</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

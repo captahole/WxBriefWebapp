@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VFR, MVFR, IFR, LIFR – Flight Categories Explained – WxBriefPro</title>
+    <meta name="description" content="What do VFR, MVFR, IFR, and LIFR mean? Learn how flight categories are determined from ceiling and visibility, and how to use them for go/no-go decisions.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.wxbriefpro.com/blog/vfr-ifr-mvfr-lifr-flight-categories">
+    <meta property="og:title" content="VFR, MVFR, IFR, LIFR – Flight Categories Explained – WxBriefPro">
+    <meta property="og:description" content="How flight categories are determined from ceiling and visibility, and what they mean for your go/no-go decision.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <p><a href="/blog">← Back to Resources</a></p>
+            <h1>VFR, MVFR, IFR, LIFR – Flight Categories Explained</h1>
+            <p style="color:#6c757d; font-size:0.9rem;">Aviation Weather Guide · 4 min read</p>
+
+            <p>Flight categories are a quick way to summarize weather conditions at an airport based on two key factors: <strong>ceiling</strong> and <strong>visibility</strong>. They're color-coded on weather maps and tools like WxBriefPro to give pilots instant situational awareness.</p>
+
+            <h2>The Four Categories</h2>
+
+            <div class="flight-cat-table">
+                <div class="flight-cat-row header-row">
+                    <span>Category</span><span>Ceiling</span><span>Visibility</span>
+                </div>
+                <div class="flight-cat-row vfr-row">
+                    <span><strong style="color:#28a745;">VFR</strong> – Visual Flight Rules</span>
+                    <span>&gt; 3,000 ft AGL</span>
+                    <span>&gt; 5 statute miles</span>
+                </div>
+                <div class="flight-cat-row mvfr-row">
+                    <span><strong style="color:#007bff;">MVFR</strong> – Marginal VFR</span>
+                    <span>1,000–3,000 ft AGL</span>
+                    <span>3–5 statute miles</span>
+                </div>
+                <div class="flight-cat-row ifr-row">
+                    <span><strong style="color:#dc3545;">IFR</strong> – Instrument Flight Rules</span>
+                    <span>500–999 ft AGL</span>
+                    <span>1–3 statute miles</span>
+                </div>
+                <div class="flight-cat-row lifr-row">
+                    <span><strong style="color:#6f42c1;">LIFR</strong> – Low IFR</span>
+                    <span>&lt; 500 ft AGL</span>
+                    <span>&lt; 1 statute mile</span>
+                </div>
+            </div>
+
+            <p style="margin-top:12px; font-size:0.9rem; color:#6c757d;">The category is determined by whichever factor (ceiling <em>or</em> visibility) puts it in the lower category.</p>
+
+            <h2>What Is a Ceiling?</h2>
+            <p>The ceiling is the height of the <strong>lowest broken (BKN) or overcast (OVC) layer</strong> in a METAR or TAF. FEW and SCT layers do not count as the ceiling. Vertical visibility (VV) also counts as a ceiling when the sky is obscured.</p>
+
+            <h2>What Does Each Category Mean for Pilots?</h2>
+
+            <h3><span style="color:#28a745;">VFR</span></h3>
+            <p>Good flying weather. VFR pilots can legally fly under FAR Part 91 VFR minimums. Always verify you meet the specific airspace requirements (Class B/C/D/E/G each have their own minimums).</p>
+
+            <h3><span style="color:#007bff;">MVFR</span></h3>
+            <p>Technically still VFR, but conditions are marginal. Student pilots and low-time pilots should be cautious — conditions can deteriorate quickly. A solid alternate plan is wise.</p>
+
+            <h3><span style="color:#dc3545;">IFR</span></h3>
+            <p>VFR flight is not legal or safe without an instrument rating and an IFR-equipped aircraft. Even instrument-rated pilots should review approach minimums carefully — many approaches require better than basic IFR conditions.</p>
+
+            <h3><span style="color:#6f42c1;">LIFR</span></h3>
+            <p>Extremely low conditions. Many instrument approaches are not usable. Even experienced IFR pilots may find the destination below minimums. Divert planning is critical.</p>
+
+            <h2>The "Worse of the Two" Rule</h2>
+            <p>If ceiling is VFR but visibility is IFR, the station is classified as IFR. The category always reflects the <em>worse</em> of the two factors. WxBriefPro applies this logic automatically when color-coding your briefing.</p>
+
+            <h2>Personal Minimums</h2>
+            <p>Legal minimums are a floor, not a target. Most experienced pilots set personal minimums well above the legal floor — for example, no VFR flight below 2,000 ft ceiling / 5 SM visibility until they have 200+ hours. Build your own personal minimums and stick to them.</p>
+
+            <p style="margin-top:24px;"><a href="/" class="primary-button" style="display:inline-block;width:auto;padding:10px 20px;"><i class="fas fa-cloud-sun"></i> Check Flight Categories on WxBriefPro</a></p>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/blog">Blog</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>
