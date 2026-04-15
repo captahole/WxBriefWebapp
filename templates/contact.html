@@ -27,7 +27,7 @@
 
             <div class="contact-card">
                 <h2>Get in Touch</h2>
-                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:contact@wxbriefpro.com">contact@wxbriefpro.com</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:wxbriefpro@pm.me">wxbriefpro@pm.me</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> Mail: 1934 Meridian Blvd Unit 406, Mammoth Lakes, CA 93546, USA</p>
             </div>
 
@@ -99,7 +99,7 @@
             const subject = document.getElementById('contact-subject').value;
             const message = document.getElementById('contact-message').value;
             const body = `From: ${name} (${email})\n\n${message}`;
-            window.location.href = `mailto:contact@wxbriefpro.com?subject=${encodeURIComponent(subject + ' - WxBriefPro')}&body=${encodeURIComponent(body)}`;
+            window.location.href = `mailto:wxbriefpro@pm.me?subject=${encodeURIComponent(subject + ' - WxBriefPro')}&body=${encodeURIComponent(body)}`;
             status.style.display = 'block';
             status.style.color = 'green';
             status.textContent = 'Opening your email client...';
