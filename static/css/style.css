@@ -836,3 +836,160 @@ footer {
     }
     .header-row span:not(:first-child) { display: none; }
 }
+
+/* ── NOTAMs ── */
+.notam-card {
+    margin-bottom: 30px;
+}
+
+.notam-card h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.notam-total-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 2px 10px;
+    margin-left: 4px;
+}
+
+.notam-content {
+    font-family: inherit;
+    white-space: normal;
+    min-height: 80px;
+}
+
+.notam-placeholder,
+.notam-loading,
+.notam-none,
+.notam-error {
+    color: #6c757d;
+    font-size: 0.9rem;
+    padding: 8px 0;
+}
+
+.notam-error { color: var(--danger-color); }
+.notam-none  { color: var(--success-color); font-weight: 600; }
+
+.notam-airport-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notam-airport-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.notam-airport-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.notam-airport-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.notam-count-label {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 600;
+}
+
+/* NOTAM groups */
+.notam-group {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.notam-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: #f1f3f5;
+}
+
+.notam-group-critical .notam-group-header { background: #fff0f0; }
+.notam-group-important .notam-group-header { background: #fffbea; }
+.notam-group-routine .notam-group-header   { background: #f8f9fa; }
+
+.notam-priority-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.badge-critical  { background: #dc3545; color: white; }
+.badge-important { background: #ffc107; color: #333; }
+.badge-routine   { background: #6c757d; color: white; }
+
+.notam-group-count {
+    font-size: 0.82rem;
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.notam-group-toggle {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    transition: background 0.15s;
+}
+
+.notam-group-toggle:hover { background: #e9ecef; }
+
+/* Individual NOTAM items */
+.notam-list {
+    padding: 8px 14px;
+}
+
+.notam-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.85rem;
+}
+
+.notam-item:last-child { border-bottom: none; }
+
+.notam-item-critical .notam-text { color: #c0392b; }
+.notam-item-important .notam-text { color: #856404; }
+
+.notam-dates {
+    display: flex;
+    gap: 16px;
+    font-size: 0.78rem;
+    color: #6c757d;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.notam-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}

@@ -404,6 +404,90 @@ def fetch_airport_status(airport_code):
         return {"error": f"Unexpected error: {str(e)}"}
 
 
+@ttl_cache(maxsize=128, ttl=300)
+def fetch_notams(airport_code):
+    """Fetch NOTAMs for an airport from the FAA NOTAM API"""
+    if not airport_code:
+        return {"error": "No airport code provided", "notams": []}
+
+    # Ensure 4-letter ICAO format
+    if len(airport_code) == 3:
+        icao = f"K{airport_code}"
+    else:
+        icao = airport_code.upper()
+
+    url = "https://external-api.faa.gov/notamapi/v1/notams"
+    params = {
+        "icaoLocation": icao,
+        "pageSize": 50,
+        "pageNum": 1,
+    }
+
+    try:
+        response = requests.get(url, params=params, timeout=15)
+        if response.status_code != 200:
+            return {"error": f"FAA NOTAM API returned {response.status_code}", "notams": []}
+
+        data = response.json()
+        items = data.get("items", [])
+
+        notams = []
+        now = datetime.datetime.now(datetime.timezone.utc)
+
+        for item in items:
+            props = item.get("properties", {})
+            core = props.get("coreNOTAMData", {})
+            notam = core.get("notam", {})
+
+            raw_text = notam.get("text", "").strip()
+            if not raw_text:
+                continue
+
+            classification = notam.get("classification", "").upper()
+            sub_class = notam.get("subClassification", "").upper()
+
+            # Parse effective dates
+            effective_start = notam.get("effectiveStart", "")
+            effective_end = notam.get("effectiveEnd", "")
+
+            # Determine priority group for display ordering/styling
+            priority = _notam_priority(classification, sub_class, raw_text)
+
+            notams.append({
+                "id": notam.get("id", ""),
+                "text": raw_text,
+                "classification": classification,
+                "subClassification": sub_class,
+                "effectiveStart": effective_start,
+                "effectiveEnd": effective_end,
+                "priority": priority,  # "critical", "important", "routine"
+            })
+
+        # Sort: critical first, then important, then routine
+        priority_order = {"critical": 0, "important": 1, "routine": 2}
+        notams.sort(key=lambda n: priority_order.get(n["priority"], 2))
+
+        return {"icao": icao, "notams": notams, "count": len(notams)}
+
+    except requests.Timeout:
+        return {"error": "NOTAM request timed out", "notams": []}
+    except Exception as e:
+        return {"error": f"NOTAM fetch failed: {str(e)}", "notams": []}
+
+
+def _notam_priority(classification, sub_class, text):
+    """Classify a NOTAM as critical / important / routine based on content"""
+    text_upper = text.upper()
+    critical_keywords = ["RWY", "RUNWAY", "CLOSED", "CLSD", "TFR", "AIRSPACE", "ILS", "LOC", "GS ", "GLIDE"]
+    important_keywords = ["TAXIWAY", "TWY", "NAVAID", "VOR", "NDB", "PAPI", "VASI", "APRON", "APCH", "APPROACH"]
+
+    if any(k in text_upper for k in critical_keywords):
+        return "critical"
+    if any(k in text_upper for k in important_keywords):
+        return "important"
+    return "routine"
+
+
 @app.route("/")
 def index():
     """Render the main page"""
@@ -432,6 +516,11 @@ def get_weather():
     status_arrival = fetch_airport_status(arrival)
     status_alternate = fetch_airport_status(alternate) if alternate else None
 
+    # Fetch NOTAMs
+    notams_departure = fetch_notams(departure)
+    notams_arrival = fetch_notams(arrival)
+    notams_alternate = fetch_notams(alternate) if alternate else None
+
     # Current UTC time
     current_utc = datetime.datetime.now(datetime.timezone.utc).strftime(
         "%Y-%m-%d %H:%M:%S UTC"
@@ -449,6 +538,11 @@ def get_weather():
                 "departure": status_departure,
                 "arrival": status_arrival,
                 "alternate": status_alternate,
+            },
+            "notams": {
+                "departure": notams_departure,
+                "arrival": notams_arrival,
+                "alternate": notams_alternate,
             },
             "timestamp": current_utc,
         }

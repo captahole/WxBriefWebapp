@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const weatherOutput = document.getElementById('weather-output');
     const datisOutput = document.getElementById('datis-output');
     const statusOutput = document.getElementById('status-output');
+    const notamOutput = document.getElementById('notam-output');
+    const notamCountBadge = document.getElementById('notam-count-badge');
     const utcTimeDisplay = document.getElementById('utc-time-display');
     const dataTimestamp = document.getElementById('data-timestamp');
     const loadingIndicator = document.getElementById('loading-indicator');
@@ -129,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         weatherOutput.innerHTML = '';
         datisOutput.innerHTML = '';
         statusOutput.innerHTML = '';
+        notamOutput.innerHTML = '<div class="notam-loading">Fetching NOTAMs...</div>';
         
         // Fetch data from the server
         fetch('/api/weather', {
@@ -163,6 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Process and display airport status
             displayStatusData(data.status, departure, arrival, alternate);
+
+            // Process and display NOTAMs
+            displayNotamData(data.notams, departure, arrival, alternate);
             
             // Hide loading indicator
             loadingIndicator.style.display = 'none';
@@ -372,5 +378,101 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         statusOutput.innerHTML = html;
+    }
+
+    // Display NOTAMs grouped by airport, with priority badges and collapsible routine section
+    function displayNotamData(notamsData, departure, arrival, alternate) {
+        if (!notamsData) {
+            notamOutput.innerHTML = '<span style="color:#6c757d;">No NOTAM data returned.</span>';
+            return;
+        }
+
+        const airports = [
+            { code: departure, data: notamsData.departure, label: 'Departure' },
+            { code: arrival,   data: notamsData.arrival,   label: 'Arrival' },
+        ];
+        if (alternate && notamsData.alternate) {
+            airports.push({ code: alternate, data: notamsData.alternate, label: 'Alternate' });
+        }
+
+        let totalCount = 0;
+        let html = '';
+
+        airports.forEach(({ code, data, label }) => {
+            if (!data) return;
+
+            html += `<div class="notam-airport-section">`;
+            html += `<div class="notam-airport-header">
+                <span class="airport-code">${code}</span>
+                <span class="notam-airport-label">${label}</span>`;
+
+            if (data.error) {
+                html += `</div><div class="notam-error">${data.error}</div></div>`;
+                return;
+            }
+
+            const notams = data.notams || [];
+            totalCount += notams.length;
+            html += `<span class="notam-count-label">${notams.length} NOTAM${notams.length !== 1 ? 's' : ''}</span></div>`;
+
+            if (notams.length === 0) {
+                html += `<div class="notam-none">✓ No active NOTAMs</div>`;
+            } else {
+                const critical  = notams.filter(n => n.priority === 'critical');
+                const important = notams.filter(n => n.priority === 'important');
+                const routine   = notams.filter(n => n.priority === 'routine');
+
+                if (critical.length)  html += renderNotamGroup(critical,  'critical',  'Runway / Airspace / Nav Aids', code);
+                if (important.length) html += renderNotamGroup(important, 'important', 'Taxiways / Approaches / Lighting', code);
+                if (routine.length)   html += renderNotamGroup(routine,   'routine',   'Routine / Administrative', code, true);
+            }
+
+            html += `</div>`;
+        });
+
+        notamOutput.innerHTML = html || '<span style="color:#6c757d;">No NOTAM data available.</span>';
+
+        // Update badge
+        if (totalCount > 0) {
+            notamCountBadge.textContent = totalCount + ' total';
+            notamCountBadge.style.display = 'inline-block';
+        } else {
+            notamCountBadge.style.display = 'none';
+        }
+
+        // Wire up collapse toggles
+        notamOutput.querySelectorAll('.notam-group-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.closest('.notam-group');
+                const list = group.querySelector('.notam-list');
+                const collapsed = list.style.display === 'none';
+                list.style.display = collapsed ? 'block' : 'none';
+                btn.textContent = collapsed ? '▲ Collapse' : '▼ Expand';
+            });
+        });
+    }
+
+    function renderNotamGroup(notams, priority, title, airportCode, collapsed = false) {
+        const uid = `${airportCode}-${priority}`;
+        let html = `<div class="notam-group notam-group-${priority}">`;
+        html += `<div class="notam-group-header">
+            <span class="notam-priority-badge badge-${priority}">${title}</span>
+            <span class="notam-group-count">${notams.length}</span>
+            <button class="notam-group-toggle">${collapsed ? '▼ Expand' : '▲ Collapse'}</button>
+        </div>`;
+        html += `<div class="notam-list" style="display:${collapsed ? 'none' : 'block'}">`;
+        notams.forEach(n => {
+            html += `<div class="notam-item notam-item-${n.priority}">`;
+            if (n.effectiveStart || n.effectiveEnd) {
+                html += `<div class="notam-dates">`;
+                if (n.effectiveStart) html += `<span>From: ${n.effectiveStart}</span>`;
+                if (n.effectiveEnd)   html += `<span>Until: ${n.effectiveEnd}</span>`;
+                html += `</div>`;
+            }
+            html += `<div class="notam-text">${n.text}</div>`;
+            html += `</div>`;
+        });
+        html += `</div></div>`;
+        return html;
     }
 });
