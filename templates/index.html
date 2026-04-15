@@ -13,25 +13,15 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wx Brief</title>
+    <title>WxBriefPro – Free Aviation Weather Briefing Tool</title>
+    <meta name="description" content="Get instant preflight weather briefings with METARs, TAFs, DATIS, and airport status for any US airport. Free aviation weather tool for pilots.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7913379801369919"
-        crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-7913379801369919">
 </head>
 
 <body>
     
     <div class="container">
-        <!-- Amazon Affiliate Banner -->
-        <div class="amazon-affiliate-banner">
-            <a href="https://amzn.to/45hRrbq" target="_blank" rel="sponsored nofollow" class="amazon-affiliate-link">
-                <i class="fab fa-amazon"></i>
-                <span>Shop Aviation Gear on Amazon</span>
-                <i class="fas fa-external-link-alt"></i>
-            </a>
-        </div>
 
         <header>
             <h1>WxBriefPro.com</h1>
@@ -40,32 +30,46 @@
                 <span id="utc-time-display" class="utc-time-value">Loading...</span>
             </div>
         </header>
+
+        <p class="tagline">Enter airport identifiers to get your preflight weather briefing.</p>
         
         <div class="input-section">
             <div class="airport-inputs">
                 <div class="input-group">
                     <label for="departure">Departure</label>
-                    <input type="text" id="departure" placeholder="JFK" class="airport-input">
+                    <input type="text" id="departure" placeholder="JFK" class="airport-input" autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label for="arrival">Arrival</label>
-                    <input type="text" id="arrival" placeholder="LAX" class="airport-input">
+                    <input type="text" id="arrival" placeholder="LAX" class="airport-input" autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label for="alternate">Alternate (Optional)</label>
-                    <input type="text" id="alternate" placeholder="SFO" class="airport-input">
+                    <input type="text" id="alternate" placeholder="SFO" class="airport-input" autocomplete="off">
                 </div>
             </div>
+
+            <div id="recent-airports-bar" class="recent-airports-bar" style="display:none;">
+                <span class="recent-label"><i class="fas fa-history"></i> Recent:</span>
+                <div id="recent-airports-list" class="recent-airports-list"></div>
+                <button id="clear-recent" class="clear-recent-btn" title="Clear history"><i class="fas fa-times"></i></button>
+            </div>
+
             <button id="fetch-button" class="primary-button">
                 <i class="fas fa-cloud-sun"></i> Get Weather Briefing
             </button>
         </div>
 
         <div class="auto-refresh-section">
-            <label for="refresh-interval">Auto-refresh (sec):</label>
-            <input type="number" id="refresh-interval" placeholder="60" min="10">
+            <label for="refresh-interval"><i class="fas fa-sync-alt"></i> Auto-refresh:</label>
+            <select id="refresh-interval" class="refresh-select">
+                <option value="">Off</option>
+                <option value="30">30 sec</option>
+                <option value="60">1 min</option>
+                <option value="300">5 min</option>
+            </select>
             <button id="auto-refresh-button" class="secondary-button">
-                <i class="fas fa-sync-alt"></i> Start Auto-Refresh
+                Start Auto-Refresh
             </button>
         </div>
 
@@ -91,18 +95,7 @@
                 <div id="status-output" class="data-content"></div>
             </div>
         </div>
-        <div id="ezoic-pub-ad-placeholder-103"></div>
-        <script>
-            ezstandalone.cmd.push(function () {
-                ezstandalone.showAds(103);
-            });
-        </script>
-
-        <div class="affiliate-section">
-            <a href="https://www.awin1.com/cread.php?awinmid=18119&awinaffid=2714272&campaign=booking_link_button&ued=https%3A%2F%2Fbooking.com" target="_blank" rel="sponsored" class="affiliate-link">
-                <i class="fas fa-hotel"></i> Book Your Travel Accommodations
-            </a>
-        </div>
+        <div id="ezoic-pub-ad-placeholder-103" style="display:none;"></div>
 
         <footer>
             <p>Data retrieved from aviationweather.gov at <span id="data-timestamp">-</span></p>

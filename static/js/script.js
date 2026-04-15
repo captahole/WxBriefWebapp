@@ -2,12 +2,15 @@
 let autoRefreshTimer = null;
 let isAutoRefreshActive = false;
 
+const RECENT_KEY = 'wxbrief_recent';
+const MAX_RECENT = 5;
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // DOM elements
     const fetchButton = document.getElementById('fetch-button');
     const autoRefreshButton = document.getElementById('auto-refresh-button');
-    const refreshIntervalInput = document.getElementById('refresh-interval');
+    const refreshIntervalSelect = document.getElementById('refresh-interval');
     const departureInput = document.getElementById('departure');
     const arrivalInput = document.getElementById('arrival');
     const alternateInput = document.getElementById('alternate');
@@ -17,14 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const utcTimeDisplay = document.getElementById('utc-time-display');
     const dataTimestamp = document.getElementById('data-timestamp');
     const loadingIndicator = document.getElementById('loading-indicator');
+    const recentBar = document.getElementById('recent-airports-bar');
+    const recentList = document.getElementById('recent-airports-list');
+    const clearRecentBtn = document.getElementById('clear-recent');
 
     // Set up event listeners
     fetchButton.addEventListener('click', fetchWeatherData);
     autoRefreshButton.addEventListener('click', toggleAutoRefresh);
-    
+    clearRecentBtn.addEventListener('click', () => {
+        localStorage.removeItem(RECENT_KEY);
+        renderRecentAirports();
+    });
+
     // Start UTC time updates
     updateUTCTime();
     setInterval(updateUTCTime, 1000);
+
+    // Render recent airports from localStorage
+    renderRecentAirports();
 
     // Update UTC time display
     function updateUTCTime() {
@@ -38,24 +51,56 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // Recent airports helpers
+    function getRecent() {
+        try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; }
+        catch { return []; }
+    }
+
+    function saveRecent(dep, arr, alt) {
+        const entry = [dep, arr, alt].filter(Boolean).join(' / ');
+        let recent = getRecent().filter(r => r !== entry);
+        recent.unshift(entry);
+        if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
+        localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+        renderRecentAirports();
+    }
+
+    function renderRecentAirports() {
+        const recent = getRecent();
+        if (recent.length === 0) {
+            recentBar.style.display = 'none';
+            return;
+        }
+        recentBar.style.display = 'flex';
+        recentList.innerHTML = recent.map(entry => {
+            const parts = entry.split(' / ');
+            return `<button class="recent-chip" data-dep="${parts[0] || ''}" data-arr="${parts[1] || ''}" data-alt="${parts[2] || ''}">${entry}</button>`;
+        }).join('');
+        recentList.querySelectorAll('.recent-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                departureInput.value = chip.dataset.dep;
+                arrivalInput.value = chip.dataset.arr;
+                alternateInput.value = chip.dataset.alt;
+                fetchWeatherData();
+            });
+        });
+    }
+
     // Toggle auto-refresh functionality
     function toggleAutoRefresh() {
         if (isAutoRefreshActive) {
-            // Stop auto-refresh
             clearInterval(autoRefreshTimer);
-            autoRefreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> Start Auto-Refresh';
+            autoRefreshButton.innerHTML = 'Start Auto-Refresh';
             autoRefreshButton.classList.remove('active');
             isAutoRefreshActive = false;
         } else {
-            // Start auto-refresh
-            const interval = parseInt(refreshIntervalInput.value);
-            
-            if (isNaN(interval) || interval < 10) {
-                alert('Please enter a valid refresh interval (minimum 10 seconds)');
+            const interval = parseInt(refreshIntervalSelect.value);
+            if (!interval || interval < 10) {
+                alert('Please select a refresh interval first');
                 return;
             }
-            
-            fetchWeatherData(); // Fetch data immediately
+            fetchWeatherData();
             autoRefreshTimer = setInterval(fetchWeatherData, interval * 1000);
             autoRefreshButton.innerHTML = '<i class="fas fa-stop"></i> Stop Auto-Refresh';
             autoRefreshButton.classList.add('active');
@@ -73,6 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please enter both departure and arrival airport codes');
             return;
         }
+
+        // Save to recent airports
+        saveRecent(departure, arrival, alternate || '');
         
         // Show loading indicator
         loadingIndicator.style.display = 'flex';
