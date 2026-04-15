@@ -1,0 +1,24 @@
+{
+  "name": "WxBriefPro – Aviation Weather Briefing",
+  "short_name": "WxBriefPro",
+  "description": "Free preflight weather briefing tool for pilots. METAR, TAF, DATIS, and airport status.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#2c3e50",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

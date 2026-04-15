@@ -1,18 +1,42 @@
-<!-- templates/about.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About – WxBriefPro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>About Wx Brief Pro</h1>
-        <p>A lightweight, fast, and modern web application for aviation weather briefings. This application provides METAR, TAF,
-        DATIS, and airport status information for flight planning.</p>
-        <p>Developed by Erik Herson</p>
-        <div style="margin-bottom: 20px;"></div>
-        <a href="../" class="back-button">Back to Main Page</a>
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <h1>About WxBriefPro</h1>
+            <p>A lightweight, fast, and modern web application for aviation weather briefings. Provides METAR, TAF, DATIS, and airport status information for flight planning — free, no account required.</p>
+            <p>Developed by Erik Herson.</p>
+            <p style="margin-top: 16px;"><a href="/contact" class="primary-button" style="display:inline-block; width:auto; padding: 10px 20px;">Contact / Feedback</a></p>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
     </div>
 </body>
 </html>

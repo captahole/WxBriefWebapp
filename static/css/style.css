@@ -518,3 +518,211 @@ footer {
 .back-button:hover {
     background: #e9ecef;
 }
+
+/* ── Content pages (privacy, faq, about, contact) ── */
+.content-section {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    line-height: 1.7;
+}
+
+.content-section h1 {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.content-section h2 {
+    font-size: 1.15rem;
+    color: var(--primary-color);
+    margin: 24px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.content-section h3 {
+    font-size: 1rem;
+    color: var(--primary-color);
+    margin: 16px 0 8px;
+}
+
+.content-section p,
+.content-section li {
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.content-section ul,
+.content-section ol {
+    padding-left: 24px;
+    margin-bottom: 12px;
+}
+
+.content-section a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.content-section a:hover {
+    text-decoration: underline;
+}
+
+/* ── Contact page ── */
+.contact-card {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.contact-card h2 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 14px;
+}
+
+.contact-card p {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.contact-card a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.contact-card a:hover {
+    text-decoration: underline;
+}
+
+.contact-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.contact-form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    padding: 10px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+/* ── Changelog ── */
+.changelog-card {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.changelog-card h2 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 14px;
+}
+
+.changelog-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.changelog-list li {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.changelog-list li:last-child {
+    border-bottom: none;
+}
+
+.changelog-date {
+    font-weight: 700;
+    color: var(--secondary-color);
+    white-space: nowrap;
+    min-width: 90px;
+}
+
+.changelog-desc {
+    color: var(--text-color);
+}
+
+/* ── Mobile improvements ── */
+@media (max-width: 600px) {
+    .airport-inputs {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .input-section {
+        padding: 16px;
+    }
+
+    .airport-input {
+        font-size: 1.1rem;
+        padding: 14px 16px;
+    }
+
+    .primary-button {
+        font-size: 1.05rem;
+        padding: 16px;
+    }
+
+    .auto-refresh-section {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .refresh-select {
+        flex: 1;
+    }
+
+    .secondary-button {
+        flex: 1;
+    }
+
+    .data-card {
+        min-height: 300px;
+    }
+
+    .changelog-list li {
+        flex-direction: column;
+        gap: 4px;
+    }
+}

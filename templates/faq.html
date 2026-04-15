@@ -1,108 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
-    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-    <script>
-        window.ezstandalone = window.ezstandalone || {};
-        ezstandalone.cmd = ezstandalone.cmd || [];
-    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-Y0BP2Q8MXK');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Wx Brief</title>
+    <title>FAQ – WxBriefPro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7913379801369919"
-        crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-7913379801369919">
 </head>
-
 <body>
     <div class="container">
         <header>
-            <h1><a href="/" style="text-decoration: none; color: inherit;">Wx Brief</a></h1>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
         </header>
-
-        <div id="ezoic-pub-ad-placeholder-101"></div>
-        <script>
-            ezstandalone.cmd.push(function () {
-                ezstandalone.showAds(101);
-            });
-        </script>
 
         <div class="content-section">
             <h1>Frequently Asked Questions</h1>
-            
-            <h2>About WxBrief Webapp</h2>
-            <p>A lightweight, fast, and modern web application for aviation weather briefings. This application provides METAR, TAF, DATIS, and airport status information for flight planning.</p>
-            
+
+            <h2>About WxBriefPro</h2>
+            <p>A lightweight, fast, and modern web application for aviation weather briefings. Provides METAR, TAF, DATIS, and airport status information for flight planning — free, no account required.</p>
+
             <h2>Features</h2>
             <ul>
                 <li>Real-time METAR and TAF data with color-coding based on flight categories</li>
                 <li>DATIS (Digital Automatic Terminal Information Service) information</li>
-                <li>Airport status and delay information</li>
+                <li>Airport status and delay information from the FAA</li>
                 <li>Support for departure, arrival, and alternate airports</li>
-                <li>Auto-refresh capability</li>
-                <li>Responsive design for desktop and mobile devices</li>
+                <li>Recent airports saved locally for quick re-use</li>
+                <li>Auto-refresh with preset intervals (30s, 1min, 5min)</li>
+                <li>Installable as a PWA — add to your phone's home screen</li>
+                <li>Responsive design for desktop, tablet, and mobile</li>
                 <li>Current UTC time display</li>
             </ul>
-            
+
             <h2>How to Use</h2>
             <ol>
-                <li><strong>Enter any U.S. airport ICAO or FAA identifier</strong> into the input fields for departure, arrival, or alternate airports (optional).
+                <li><strong>Enter any U.S. airport ICAO or FAA identifier</strong> into the departure, arrival, or alternate fields.
                     <ul>
-                        <li>You can <strong>include or omit the "K"</strong> prefix (e.g., <code>KLAX</code> or <code>LAX</code> both work).</li>
-                        <li>The app also supports airports in:
-                            <ul>
-                                <li><strong>Hawaii</strong> (e.g., <code>PHNL</code>)</li>
-                                <li><strong>Alaska</strong> (e.g., <code>PAFA</code>)</li>
-                                <li><strong>Puerto Rico</strong> (e.g., <code>TJSJ</code>)</li>
-                            </ul>
-                        </li>
+                        <li>You can <strong>include or omit the "K"</strong> prefix — <code>KLAX</code> and <code>LAX</code> both work.</li>
+                        <li>Supports Hawaii (e.g., <code>PHNL</code>), Alaska (e.g., <code>PAFA</code>), and Puerto Rico (e.g., <code>TJSJ</code>).</li>
                     </ul>
                 </li>
-                <li>Click the <strong>"Get Briefing"</strong> button to fetch the latest weather and status information.</li>
-                <li>The display will automatically color-code flight categories for quick situational awareness.</li>
-                <li>The page auto-refreshes at regular intervals to ensure up-to-date data.</li>
+                <li>Click <strong>"Get Weather Briefing"</strong> to fetch the latest data.</li>
+                <li>Weather is automatically color-coded by flight category.</li>
+                <li>Use the auto-refresh dropdown to keep data current during a flight watch.</li>
             </ol>
-            
-            <h2>Color Coding</h2>
-            <p>The weather information is color-coded according to standard flight categories:</p>
-            <ul>
-                <li><span style="color: #2ecc71; font-weight: bold;">Green: VFR (Visual Flight Rules)</span> - Ceiling greater than 3,000 feet AGL and visibility greater than 5 miles</li>
-                <li><span style="color: #3498db; font-weight: bold;">Blue: MVFR (Marginal Visual Flight Rules)</span> - Ceiling 1,000 to 3,000 feet AGL and/or visibility 3 to 5 miles</li>
-                <li><span style="color: #e74c3c; font-weight: bold;">Red: IFR (Instrument Flight Rules)</span> - Ceiling 500 to less than 1,000 feet AGL and/or visibility 1 to less than 3 miles</li>
-                <li><span style="color: #9b59b6; font-weight: bold;">Magenta: LIFR (Low Instrument Flight Rules)</span> - Ceiling less than 500 feet AGL and/or visibility less than 1 mile</li>
-            </ul>
-        </div>
 
-        <div id="ezoic-pub-ad-placeholder-103"></div>
-        <script>
-            ezstandalone.cmd.push(function () {
-                ezstandalone.showAds(103);
-            });
-        </script>
+            <h2>Color Coding</h2>
+            <ul>
+                <li><span style="color: #28a745; font-weight: bold;">Green – VFR</span>: Ceiling &gt; 3,000 ft AGL and visibility &gt; 5 miles</li>
+                <li><span style="color: #007bff; font-weight: bold;">Blue – MVFR</span>: Ceiling 1,000–3,000 ft AGL and/or visibility 3–5 miles</li>
+                <li><span style="color: #dc3545; font-weight: bold;">Red – IFR</span>: Ceiling 500–1,000 ft AGL and/or visibility 1–3 miles</li>
+                <li><span style="color: #6f42c1; font-weight: bold;">Magenta – LIFR</span>: Ceiling &lt; 500 ft AGL and/or visibility &lt; 1 mile</li>
+            </ul>
+
+            <h2>How do I add WxBriefPro to my phone's home screen?</h2>
+            <p>On iOS (Safari): tap the Share button, then "Add to Home Screen."<br>
+            On Android (Chrome): tap the three-dot menu, then "Add to Home Screen" or "Install app."<br>
+            Once installed, it opens full-screen like a native app.</p>
+
+            <h2>Is my data private?</h2>
+            <p>Yes. We don't have accounts or logins. Airport codes you enter are only used to fetch weather data and are not stored. Recent airports are saved only in your browser's localStorage. See our <a href="/privacy-policy">Privacy Policy</a> for full details.</p>
+        </div>
 
         <footer>
             <nav class="footer-links">
                 <a href="/">Home</a> |
                 <a href="/about">About</a> |
                 <a href="/faq">FAQ</a> |
+                <a href="/contact">Contact</a> |
                 <a href="/privacy-policy">Privacy Policy</a>
             </nav>
         </footer>
     </div>
 </body>
-
 </html>

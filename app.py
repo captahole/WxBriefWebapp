@@ -31,6 +31,11 @@ def faq():
     return render_template("faq.html")
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 @app.route("/ads.txt")
 def ads():
     return send_from_directory(".", "ads.txt")

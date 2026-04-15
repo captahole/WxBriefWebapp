@@ -15,6 +15,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WxBriefPro – Free Aviation Weather Briefing Tool</title>
     <meta name="description" content="Get instant preflight weather briefings with METARs, TAFs, DATIS, and airport status for any US airport. Free aviation weather tool for pilots.">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WxBriefPro">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -102,6 +107,7 @@
             <nav class="footer-links">
                 <a href="/about">About</a> |
                 <a href="/faq">FAQ</a> |
+                <a href="/contact">Contact</a> |
                 <a href="/privacy-policy">Privacy Policy</a>
             </nav>
         </footer>
@@ -109,6 +115,12 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/static/sw.js')
+                .catch(err => console.warn('SW registration failed:', err));
+        }
+    </script>
 </body>
 
 </html>

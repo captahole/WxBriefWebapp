@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact – WxBriefPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <h1><i class="fas fa-envelope"></i> Contact</h1>
+            <p>Have a bug report, feature request, or question? We'd love to hear from you.</p>
+
+            <div class="contact-card">
+                <h2>Get in Touch</h2>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:contact@wxbriefpro.com">contact@wxbriefpro.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Mail: 1934 Meridian Blvd Unit 406, Mammoth Lakes, CA 93546, USA</p>
+            </div>
+
+            <div class="contact-card" style="margin-top: 20px;">
+                <h2>Send a Message</h2>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input type="text" id="contact-name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-subject">Subject</label>
+                        <select id="contact-subject">
+                            <option value="bug">Bug Report</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="question">General Question</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" rows="5" placeholder="Describe your bug, idea, or question..." required></textarea>
+                    </div>
+                    <button type="submit" class="primary-button">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <p id="contact-status" style="margin-top: 12px; display: none;"></p>
+                </form>
+            </div>
+
+            <div class="changelog-card">
+                <h2><i class="fas fa-history"></i> Changelog</h2>
+                <ul class="changelog-list">
+                    <li>
+                        <span class="changelog-date">April 2026</span>
+                        <span class="changelog-desc">Added recent airports (localStorage), auto-refresh dropdown, PWA support, improved mobile layout, updated privacy policy.</span>
+                    </li>
+                    <li>
+                        <span class="changelog-date">August 2025</span>
+                        <span class="changelog-desc">Initial public release. METAR/TAF, DATIS, and FAA airport status with flight category color-coding.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const status = document.getElementById('contact-status');
+            // mailto fallback — opens email client with pre-filled fields
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            const body = `From: ${name} (${email})\n\n${message}`;
+            window.location.href = `mailto:contact@wxbriefpro.com?subject=${encodeURIComponent(subject + ' - WxBriefPro')}&body=${encodeURIComponent(body)}`;
+            status.style.display = 'block';
+            status.style.color = 'green';
+            status.textContent = 'Opening your email client...';
+        });
+    </script>
+</body>
+</html>
