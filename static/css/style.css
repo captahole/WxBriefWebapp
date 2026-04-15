@@ -993,3 +993,34 @@ footer {
     white-space: pre-wrap;
     word-break: break-word;
 }
+
+/* NOTAM unavailable notice */
+.notam-unavailable {
+    background: #fff8e1;
+    border-left: 4px solid var(--warning-color);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.notam-unavailable i {
+    color: var(--warning-color);
+    margin-right: 6px;
+}
+
+.notam-links {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.notam-links a {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.notam-links a:hover {
+    text-decoration: underline;
+}

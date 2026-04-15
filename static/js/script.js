@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayNotamData(notamsData, departure, arrival, alternate) {
         if (!notamsData) {
             notamOutput.innerHTML = '<span style="color:#6c757d;">No NOTAM data returned.</span>';
+            notamCountBadge.style.display = 'none';
             return;
         }
 
@@ -393,6 +394,25 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
         if (alternate && notamsData.alternate) {
             airports.push({ code: alternate, data: notamsData.alternate, label: 'Alternate' });
+        }
+
+        // Check if all airports are unavailable
+        const allUnavailable = airports.every(a => a.data && a.data.unavailable);
+        if (allUnavailable) {
+            const firstIcao = airports[0]?.data?.icao || departure;
+            const searchBase = 'https://notams.aim.faa.gov/notamSearch/nsapp.html#/?searchType=0&designatorsForLocation=';
+            const links = airports.map(a =>
+                `<a href="${searchBase}${a.data.icao}" target="_blank" rel="noopener">${a.data.icao}</a>`
+            ).join(' &nbsp;·&nbsp; ');
+            notamOutput.innerHTML = `
+                <div class="notam-unavailable">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <strong>NOTAM API temporarily unavailable.</strong>
+                    The FAA is migrating its NOTAM API infrastructure. Check NOTAMs directly on the FAA NOTAM Search:
+                    <div class="notam-links">${links}</div>
+                </div>`;
+            notamCountBadge.style.display = 'none';
+            return;
         }
 
         let totalCount = 0;
