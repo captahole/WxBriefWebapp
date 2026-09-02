@@ -34,8 +34,29 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="WxBriefPro">
+    <link rel="canonical" href="https://www.wxbriefpro.com/">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WxBriefPro",
+      "url": "https://www.wxbriefpro.com/",
+      "description": "Free aviation weather briefing tool for pilots. Get instant preflight briefings with METARs, TAFs, DATIS, and FAA airport status for any U.S. airport.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Erik Herson"
+      }
+    }
+    </script>
 </head>
 
 <body>

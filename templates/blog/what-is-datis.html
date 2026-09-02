@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BP2Q8MXK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Y0BP2Q8MXK');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is DATIS and How Do I Use It? – WxBriefPro</title>
+    <meta name="description" content="Learn what DATIS (Digital ATIS) is, how it differs from the radio ATIS, and how pilots use it for preflight planning. Includes a breakdown of a real DATIS message.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.wxbriefpro.com/blog/what-is-datis">
+    <meta property="og:title" content="What Is DATIS and How Do I Use It? – WxBriefPro">
+    <meta property="og:description" content="What DATIS is, how it differs from the radio ATIS, and how pilots use it for preflight planning.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
+    <link rel="canonical" href="https://www.wxbriefpro.com/blog/what-is-datis">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What Is DATIS and How Do I Use It?",
+      "description": "Learn what DATIS (Digital ATIS) is, how it differs from the radio ATIS, and how pilots use it for preflight planning.",
+      "url": "https://www.wxbriefpro.com/blog/what-is-datis",
+      "author": {
+        "@type": "Person",
+        "name": "Erik Herson"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WxBriefPro",
+        "url": "https://www.wxbriefpro.com"
+      },
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02"
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/" style="text-decoration: none; color: inherit;">WxBriefPro.com</a></h1>
+        </header>
+
+        <div class="content-section">
+            <p><a href="/blog">← Back to Resources</a></p>
+            <h1>What Is DATIS and How Do I Use It?</h1>
+            <p style="color:#6c757d; font-size:0.9rem;">Aviation Weather Guide · 5 min read</p>
+
+            <p><strong>DATIS</strong> (Digital Automatic Terminal Information Service) is the text-based version of the ATIS broadcast you hear on the radio before calling ground or clearance delivery. While the radio ATIS requires you to tune in and listen, DATIS delivers the same information as plain text — making it easy to review during preflight planning from your phone, tablet, or computer.</p>
+
+            <h2>What Is ATIS?</h2>
+            <p>ATIS (Automatic Terminal Information Service) is a continuous broadcast of essential airport information recorded by controllers. It includes the current weather observation, active runways, NOTAMs in effect, and any special notices. Each new recording is assigned a sequential letter (Alpha, Bravo, Charlie…) so controllers and pilots can confirm they have the current information.</p>
+            <p>At busy airports you'll hear something like: <em>"Information Sierra, one-five-five-zero Zulu. Wind two-four-zero at one-two, visibility one-zero, sky clear, temperature two-one, dew point one-four, altimeter two-niner-niner-two. Runway two-four-left and two-four-right in use for arrivals and departures. Advise on initial contact you have information Sierra."</em></p>
+
+            <h2>What Makes DATIS Different?</h2>
+            <p>DATIS is simply that same broadcast delivered digitally as text. The content is identical — same letter, same weather, same runway information. The advantages are:</p>
+            <ul>
+                <li><strong>Available before you get in the aircraft.</strong> You can review the ATIS letter and altimeter setting during your preflight walk-around or while filing your flight plan.</li>
+                <li><strong>No need to tune and listen.</strong> Especially useful at airports with a long, detailed ATIS that's easy to mishear on the radio.</li>
+                <li><strong>Easy to reference while copying a clearance.</strong> Having the ATIS code visible on-screen means one less thing to juggle.</li>
+                <li><strong>Useful for simulator preflight preparation.</strong> Student pilots can familiarize themselves with ATIS content before a lesson.</li>
+            </ul>
+
+            <h2>Example DATIS Message</h2>
+            <div class="metar-example">KLAX ATIS INFORMATION SIERRA 1550Z. WIND 240 AT 12. VISIBILITY 10. SKY CONDITION CLEAR. TEMPERATURE 21. DEW POINT 14. ALTIMETER 2992. ILS APPROACH IN USE RUNWAY 24L AND 24R. NOTICE TO AIR MISSIONS, TAXIWAY CHARLIE BETWEEN RUNWAY 25L AND 25R CLOSED. ADVISE ON INITIAL CONTACT YOU HAVE INFORMATION SIERRA.</div>
+
+            <h2>Breaking Down the DATIS</h2>
+
+            <h3>Information Letter — <code>SIERRA</code></h3>
+            <p>The current ATIS code. When you call ground or clearance, say "with information Sierra." Controllers will issue a new letter (e.g., Tango) when conditions change significantly or at least once per hour. If the letter has changed since you got the DATIS, listen to the new broadcast or pull the updated DATIS before calling.</p>
+
+            <h3>Time — <code>1550Z</code></h3>
+            <p>The time the current ATIS recording was made, in UTC. Always verify the DATIS is current — if it's more than an hour old, pull a fresh one.</p>
+
+            <h3>Wind — <code>WIND 240 AT 12</code></h3>
+            <p>Wind direction (from 240°) and speed (12 knots). Same data as the METAR wind field, typically taken from the automated surface observation at the airport.</p>
+
+            <h3>Altimeter — <code>ALTIMETER 2992</code></h3>
+            <p>The current altimeter setting in inches of mercury. Set this in your altimeter before departure. This is one of the most critical items in the ATIS — an incorrect altimeter setting means your indicated altitude is wrong.</p>
+
+            <h3>Active Runways</h3>
+            <p>The ATIS specifies which runways are in use for arrivals and departures. At complex airports this can include parallel runway configurations (e.g., 24L/24R) or different runways for arrivals vs. departures. Note this before calling ATC — your expected runway affects your taxi route.</p>
+
+            <h3>NOTAMs and Notices</h3>
+            <p>Controllers include significant NOTAMs in the ATIS — things like closed taxiways, out-of-service navaids, or construction affecting the movement area. The DATIS text makes these easier to read carefully compared to a rapid radio broadcast.</p>
+
+            <h2>When Is DATIS Available?</h2>
+            <p>DATIS is available at most major and medium-sized U.S. airports that have a control tower. Smaller uncontrolled airports (no control tower) typically don't have ATIS at all — instead they may have an AWOS (Automated Weather Observing System) or ASOS frequency you can call or tune in on the radio.</p>
+            <p>If WxBriefPro shows "No DATIS Available" for an airport, it's likely an uncontrolled field or a smaller airport without a DATIS feed.</p>
+
+            <h2>How to Use DATIS in Your Preflight Flow</h2>
+            <ol>
+                <li>Pull the DATIS for your departure airport before leaving the FBO or completing your preflight inspection.</li>
+                <li>Note the information letter and altimeter setting. Write them down.</li>
+                <li>Check the active runway — does it match your expected departure direction?</li>
+                <li>Read the NOTAMs section for any closed taxiways or navaids that affect your taxi or departure procedure.</li>
+                <li>When you call ground or clearance delivery, include "with information [letter]" in your initial call.</li>
+                <li>If you're doing a longer preflight or there's a delay, pull the DATIS again before calling — it may have updated.</li>
+            </ol>
+
+            <p style="margin-top:24px;"><a href="/" class="primary-button" style="display:inline-block;width:auto;padding:10px 20px;"><i class="fas fa-broadcast-tower"></i> Check DATIS on WxBriefPro</a></p>
+
+            <div style="margin-top:32px; padding-top:24px; border-top:1px solid #dee2e6;">
+                <h2>Related Guides</h2>
+                <ul>
+                    <li><a href="/blog/how-to-read-a-metar">How to Read a METAR</a> — The weather observation behind the ATIS weather fields, decoded</li>
+                    <li><a href="/blog/preflight-weather-checklist-vfr">Preflight Weather Briefing Checklist for VFR Pilots</a> — Where DATIS fits in a complete preflight weather briefing</li>
+                    <li><a href="/blog/vfr-ifr-mvfr-lifr-flight-categories">VFR, MVFR, IFR, LIFR – Flight Categories Explained</a> — Understanding the weather conditions behind the ATIS ceiling and visibility</li>
+                    <li><a href="/blog/understanding-taf-forecasts">Understanding TAF Forecasts</a> — Planning ahead beyond the current ATIS observation</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <nav class="footer-links">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="/faq">FAQ</a> |
+                <a href="/blog">Blog</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy-policy">Privacy Policy</a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

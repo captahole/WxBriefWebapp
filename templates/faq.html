@@ -11,9 +11,72 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ – WxBriefPro</title>
+    <title>FAQ – WxBriefPro Aviation Weather Briefing Tool</title>
+    <meta name="description" content="Frequently asked questions about WxBriefPro — how to use the free aviation weather briefing tool, METAR color coding, DATIS, PWA installation, and data privacy.">
+    <link rel="canonical" href="https://www.wxbriefpro.com/faq">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wxbriefpro.com/faq">
+    <meta property="og:title" content="FAQ – WxBriefPro Aviation Weather Briefing Tool">
+    <meta property="og:description" content="Frequently asked questions about WxBriefPro — how to use the free aviation weather briefing tool, METAR color coding, DATIS, and PWA installation.">
+    <meta property="og:image" content="https://www.wxbriefpro.com/static/icons/icon-512.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is WxBriefPro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "WxBriefPro is a free aviation weather briefing tool for pilots. It provides real-time METAR, TAF, DATIS, and FAA airport status information for any U.S. airport — no account required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use WxBriefPro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter any U.S. airport ICAO or FAA identifier (e.g., KLAX or LAX) into the departure, arrival, or alternate fields, then click 'Get Weather Briefing'. Weather is automatically color-coded by flight category."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the colors mean in WxBriefPro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Green = VFR (ceiling above 3,000 ft and visibility above 5 miles). Blue = MVFR (ceiling 1,000–3,000 ft or visibility 3–5 miles). Red = IFR (ceiling 500–999 ft or visibility 1–3 miles). Magenta = LIFR (ceiling below 500 ft or visibility below 1 mile)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I add WxBriefPro to my phone's home screen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On iOS (Safari): tap the Share button, then 'Add to Home Screen.' On Android (Chrome): tap the three-dot menu, then 'Add to Home Screen' or 'Install app.' Once installed, it opens full-screen like a native app."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data private when using WxBriefPro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. WxBriefPro has no user accounts or logins. Airport codes you enter are only used to fetch weather data and are not stored on our servers. Recent airports are saved only in your browser's localStorage and never leave your device."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does WxBriefPro work for airports in Hawaii and Alaska?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. WxBriefPro supports all U.S. airports including Hawaii (e.g., PHNL), Alaska (e.g., PAFA), and Puerto Rico (e.g., TJSJ). Use the full ICAO identifier for non-continental U.S. airports."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div class="container">

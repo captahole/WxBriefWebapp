@@ -56,9 +56,63 @@ def blog_flight_categories():
     return render_template("blog/vfr-ifr-mvfr-lifr-flight-categories.html")
 
 
+@app.route("/blog/what-is-datis")
+def blog_datis():
+    return render_template("blog/what-is-datis.html")
+
+
+@app.route("/blog/preflight-weather-checklist-vfr")
+def blog_preflight_checklist():
+    return render_template("blog/preflight-weather-checklist-vfr.html")
+
+
 @app.route("/ads.txt")
 def ads():
     return send_from_directory(".", "ads.txt")
+
+
+@app.route("/robots.txt")
+def robots():
+    content = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /api/\n"
+        "\n"
+        "Sitemap: https://www.wxbriefpro.com/sitemap.xml\n"
+    )
+    return app.response_class(content, mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap():
+    pages = [
+        ("https://www.wxbriefpro.com/", "1.0", "weekly"),
+        ("https://www.wxbriefpro.com/blog", "0.9", "weekly"),
+        ("https://www.wxbriefpro.com/blog/how-to-read-a-metar", "0.8", "monthly"),
+        ("https://www.wxbriefpro.com/blog/understanding-taf-forecasts", "0.8", "monthly"),
+        ("https://www.wxbriefpro.com/blog/vfr-ifr-mvfr-lifr-flight-categories", "0.8", "monthly"),
+        ("https://www.wxbriefpro.com/blog/what-is-datis", "0.8", "monthly"),
+        ("https://www.wxbriefpro.com/blog/preflight-weather-checklist-vfr", "0.8", "monthly"),
+        ("https://www.wxbriefpro.com/faq", "0.7", "monthly"),
+        ("https://www.wxbriefpro.com/about", "0.6", "monthly"),
+        ("https://www.wxbriefpro.com/contact", "0.5", "monthly"),
+        ("https://www.wxbriefpro.com/privacy-policy", "0.3", "yearly"),
+    ]
+    today = datetime.date.today().isoformat()
+    xml_parts = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, priority, changefreq in pages:
+        xml_parts.append(
+            f"  <url>\n"
+            f"    <loc>{loc}</loc>\n"
+            f"    <lastmod>{today}</lastmod>\n"
+            f"    <changefreq>{changefreq}</changefreq>\n"
+            f"    <priority>{priority}</priority>\n"
+            f"  </url>"
+        )
+    xml_parts.append("</urlset>")
+    xml = "\n".join(xml_parts)
+    return app.response_class(xml, mimetype="application/xml")
 
 
 @ttl_cache(maxsize=128, ttl=60)
